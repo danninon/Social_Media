@@ -9,7 +9,7 @@ class Main extends React.Component {
     };
     if (sessionStorage.getItem("accessToken") === null) {
       if (accessToken !== null) {
-        sessionStorage.setItem("accessToken", this.state.accessToken);
+        sessionStorage.setItem("accessToken", accessToken);
       } else {
         //handleError
       }
@@ -257,12 +257,12 @@ class ToolBar extends React.Component {
           ),
           React.createElement(
               'button',
-              { className: 'button', onClick: this.handle_redirect_admin },
+              { className: 'button', onClick: this.handle_redirect_chat },
               'Message Page'
           ),
           React.createElement(
               'button',
-              { className: 'button', onClick: this.handle_redirect_advancedChat },
+              { className: 'button', onClick: this.handle_redirect_about },
               'About Page'
           )
       );
@@ -281,8 +281,8 @@ class ToolBar extends React.Component {
       //if not at about already
       window.location.href = '/about/about.html';
   }
-  handle_redirect_advancedChat() {
+  handle_redirect_chat() {
       //if not at chat already
-      window.location.href = '/advancedChat/advancedChat.html';
+      window.location.href = '/chat/chat.html';
   }
 }

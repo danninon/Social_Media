@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>Identification Page</title>
+	<!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+	<script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+	<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+	<script src="js/About.js"></script>
+     <link rel="stylesheet" type='text/css' href="css/about.css">
+</head>
+
+<body>
+
+	<div id='About'>element</id>
+
+</body>
+
+<script>
+    const domContainer = document.querySelector('#About');
+    ReactDOM.render( React.createElement(About , null ), domContainer);
+</script>
+
+
+</html>

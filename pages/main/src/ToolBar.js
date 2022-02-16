@@ -23,8 +23,8 @@ class ToolBar extends React.Component
     render() { return <div className='ToolBar'>
                         <button className='button' onClick={this.handle_redirect_admin}>Admin Page</button>
                         <button className='button' onClick={this.handle_redirect_home}>Home Page</button>
-                        <button className='button' onClick={this.handle_redirect_admin}>Message Page</button>
-                        <button className='button' onClick={this.handle_redirect_advancedChat}>About Page</button>
+                        <button className='button' onClick={this.handle_redirect_chat}>Message Page</button>
+                        <button className='button' onClick={this.handle_redirect_about}>About Page</button>
                       </div>
 	}
 
@@ -42,8 +42,8 @@ class ToolBar extends React.Component
          //if not at about already
          window.location.href = '/about/about.html';
      }
-     handle_redirect_advancedChat(){
+     handle_redirect_chat(){
          //if not at chat already
-        window.location.href = '/advancedChat/advancedChat.html';
+        window.location.href = '/chat/chat.html';
     }
 }
