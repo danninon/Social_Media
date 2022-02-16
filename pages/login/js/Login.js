@@ -13,67 +13,103 @@ class Login extends React.Component {
       null,
       React.createElement(
         'form',
-        { onSubmit: this.handleSubmit },
+        { className: 'main-block', onSubmit: this.handleSubmit },
         React.createElement(
-          'li',
+          'h1',
           null,
-          'Current state: ' + this.state.checkbox,
+          'Authentication Form'
+        ),
+        React.createElement('hr', null),
+        React.createElement(
+          'div',
+          { className: 'formcontainer' },
           React.createElement(
-            'label',
-            { className: 'switch' },
+            'div',
+            { className: 'account-type' },
+            React.createElement('input', { type: 'radio', value: 'none', id: 'radioOne', name: 'account', checked: '', onChange: this.handleSwitchLoginSignUp }),
+            React.createElement(
+              'label',
+              { htmlFor: 'radioOne', className: 'radio' },
+              'Login'
+            ),
+            React.createElement('input', { type: 'radio', value: 'none', id: 'radioTwo', name: 'account', onChange: this.handleSwitchLoginSignUp }),
+            React.createElement(
+              'label',
+              { htmlFor: 'radioTwo', className: 'radio' },
+              'Signup'
+            )
+          ),
+          React.createElement('hr', null),
+          React.createElement(
+            'div',
+            { className: this.state.checkbox == "signup" ? "visible container" : "transparent container" },
+            React.createElement(
+              'label',
+              { htmlFor: 'username' },
+              React.createElement(
+                'strong',
+                null,
+                'Username'
+              )
+            ),
             React.createElement('input', {
-              type: 'checkbox',
-              name: 'checkbox',
-              placeholder: 'checkbox',
-              value: this.state.checkbox,
-              onClick: this.handleSwitchLoginSignUp
-            }),
-            React.createElement('span', { className: 'slider round' })
+              type: 'name',
+              name: 'name',
+              placeholder: 'name',
+              value: this.state.name ? this.state.name : "",
+              onChange: this.handleChange,
+              required: this.state.checkbox == 'signup'
+            })
+          ),
+          React.createElement('hr', null),
+          React.createElement(
+            'div',
+            { className: 'container' },
+            React.createElement(
+              'label',
+              { htmlFor: 'email' },
+              React.createElement(
+                'strong',
+                null,
+                'Email'
+              )
+            ),
+            React.createElement('input', {
+              type: 'email',
+              name: 'email',
+              placeholder: 'Email',
+              value: this.state.email,
+              onChange: this.handleChange,
+              required: true
+            })
+          ),
+          React.createElement('hr', null),
+          React.createElement(
+            'div',
+            null,
+            React.createElement(
+              'label',
+              { htmlFor: 'password' },
+              React.createElement(
+                'strong',
+                null,
+                'Password'
+              )
+            ),
+            React.createElement('input', {
+              type: 'password',
+              name: 'password',
+              placeholder: 'Password',
+              value: this.state.password,
+              onChange: this.handleChange,
+              required: true
+            })
+          ),
+          React.createElement(
+            'button',
+            { className: 'button', type: 'submit', required: true },
+            'Submit'
           )
-        ),
-        React.createElement(
-          'li',
-          { className: this.state.checkbox == "signup" ? "visible" : "transparent" },
-          'Name:',
-          React.createElement('input', {
-            type: 'name',
-            name: 'name',
-            placeholder: 'name',
-            value: this.state.name ? this.state.name : "",
-            onChange: this.handleChange,
-            required: this.state.checkbox == 'signup'
-          })
-        ),
-        React.createElement(
-          'li',
-          null,
-          'Email:',
-          React.createElement('input', {
-            type: 'email',
-            name: 'email',
-            placeholder: 'Email',
-            value: this.state.email,
-            onChange: this.handleChange,
-            required: true
-          })
-        ),
-        React.createElement(
-          'li',
-          null,
-          'Password:',
-          React.createElement('input', {
-            type: 'password',
-            name: 'password',
-            placeholder: 'Password',
-            value: this.state.password,
-            onChange: this.handleChange,
-            required: true
-          })
-        ),
-        React.createElement(
-          'button',
-          { className: 'SubmitButton', type: 'submit', required: true },
-          'Submit'
         )
       )
     );

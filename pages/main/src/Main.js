@@ -15,20 +15,17 @@ class Main extends React.Component {
    // sessionStorage.clear();
   }
   render() {
-    return <div>
-
-    <PostsListBox classname='PostListBox' name='Posts'/>
-    </div>
+    return <div> <PostsListBox  classname='PostListBox' name='Posts'/>  </div>
   }
   componentWillUnmount() 
   {
-    sessionStorage.clear();
+    //sessionStorage.clear();
   }
 
   async componentDidMount(){
 
-console.log("2");
-window.alert("2");
+    // console.log("2");
+
     
   }
 };

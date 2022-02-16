@@ -68,7 +68,7 @@ router.post("/signup", async (req, res) => {
 })
 
 router.get("/post/all", db.authenticateToken, db.userIsApproved, (req, res) => {
-    res.send(JSON.stringify(db.posts));
+    res.send(JSON.stringify(db.posts)); //make it return only last posts
 })
 
 router.get("/getAllUsers", db.authenticateToken, db.userIsApproved, (req, res) => {
@@ -114,8 +114,8 @@ router.post("/sendMessageToUser", db.authenticateToken, db.userIsApproved, async
 
 router.post("/post", db.authenticateToken, db.userIsApproved, async (req, res) => {
     try {
-        const postId = await db.createPost({post:req.body}, req.id);
-        res.json({postid: postId});
+        const postItem = await db.createPost(req.body, req.id);
+        res.json(postItem);
     } catch (e) {
         console.log(e.message);
         res.status(400).send(e);
