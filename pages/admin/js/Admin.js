@@ -1,3 +1,27 @@
+class Admin extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  //initial fetch
+  async componentDidMount() {}
+
+  //when fetch send authenticate!
+
+
+  //should filter by time
+
+  render() {
+    return React.createElement(
+      'div',
+      null,
+      React.createElement(ToolBar, { className: 'ToolBar' })
+    );
+  }
+}
+
 class ToolBar extends React.Component {
 
     constructor(props) {

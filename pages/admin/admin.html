@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>Identification Page</title>
+	<!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+	<script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+	<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+	<script src="js/Admin.js"></script>
+     <link rel="stylesheet" type='text/css' href="css/admin.css">
+</head>
+
+<body>
+
+	<div id='Admin'>element</id>
+
+</body>
+
+<script>
+    const domContainer = document.querySelector('#Admin');
+    ReactDOM.render( React.createElement(Admin , null ), domContainer);
+</script>
+
+
+</html>
