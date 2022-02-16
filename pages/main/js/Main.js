@@ -18,17 +18,20 @@ class Main extends React.Component {
     return React.createElement(
       "div",
       null,
-      React.createElement(PostsListBox, { classname: "PostListBox", name: "Posts" })
+      " ",
+      React.createElement(PostsListBox, { classname: "PostListBox", name: "Posts" }),
+      "  "
     );
   }
   componentWillUnmount() {
-    // sessionStorage.clear();
+    //sessionStorage.clear();
   }
 
   async componentDidMount() {
 
-    console.log("2");
-    window.alert("2");
+    // console.log("2");
+
+
   }
 };
 
@@ -36,7 +39,7 @@ class PostItem extends React.Component {
 	constructor(props) {
 		super(props);
 		this.handle_click = this.handle_click.bind(this);
-		this.state = { authorName: '', PostName: '', PostText: '', PostTime: '' };
+		this.state = { postAutherName: '', postText: '', postTime: '' };
 	}
 
 	handle_click() {
@@ -48,29 +51,64 @@ class PostItem extends React.Component {
 			'div',
 			{ className: 'PostItem ' },
 			React.createElement(
-				'li',
-				{ className: 'PostAuthorName' },
-				this.props.post.authorName
-			),
-			React.createElement(
-				'li',
-				{ className: 'PostName' },
-				this.props.post.PostName
-			),
-			React.createElement(
-				'li',
-				{ className: 'PostText' },
-				this.props.post.PostText
-			),
-			React.createElement(
-				'li',
-				{ className: 'PostTime' },
-				this.props.post.PostTime
+				'form',
+				{ className: 'formcontainer' },
+				React.createElement(
+					'div',
+					{ className: 'container' },
+					React.createElement(
+						'label',
+						null,
+						React.createElement(
+							'strong',
+							null,
+							'Author:'
+						)
+					),
+					React.createElement(
+						'label',
+						{ className: 'PostAuthorName' },
+						this.props.post.author.name
+					)
+				),
+				React.createElement(
+					'div',
+					{ className: 'container' },
+					React.createElement(
+						'label',
+						null,
+						React.createElement(
+							'strong',
+							null,
+							'Text:'
+						)
+					),
+					React.createElement('textarea', { value: this.props.post.content.text, disabled: true, className: 'postText' })
+				),
+				React.createElement(
+					'div',
+					{ className: 'container' },
+					React.createElement(
+						'label',
+						null,
+						React.createElement(
+							'strong',
+							null,
+							'Time:'
+						)
+					),
+					React.createElement(
+						'label',
+						{ className: 'postTime' },
+						this.props.post.content.date
+					)
+				)
 			)
 		);
 	}
 }
 
+//insert add button
 class PostsListBox extends React.Component {
 
 	constructor(props) {
@@ -79,7 +117,7 @@ class PostsListBox extends React.Component {
 		this.handle_post_input_box = this.handle_post_input_box.bind(this);
 		this.handle_post_submit = this.handle_post_submit.bind(this);
 
-		this.state = { posts: [], PostText: "" };
+		this.state = { posts: [], postText: "" };
 	}
 
 	//initial fetch
@@ -89,57 +127,78 @@ class PostsListBox extends React.Component {
 	}
 
 	//when fetch send authenticate!
-	async fetch_posts() {
-		const response = await fetch('/api/users/post/all', {
-			headers: new Headers({ 'Authorization': 'BEARER ' + sessionStorage.getItem('accessToken') })
-		});
-		if (response.status != 200) {
-			throw new error('Error while fetching posts');
-		}
-		const data = await response.json();
-		return data;
-	}
+
 
 	//should filter by time
-	update_post_list(newPosts) {
-		this.setState({ posts: newPosts });
-	}
+
 
 	render() {
 		return React.createElement(
 			'div',
-			{ className: 'PostsListBox' },
+			{ className: 'main-block' },
+			React.createElement(
+				'div',
+				{ className: 'container' },
+				React.createElement(
+					'div',
+					null,
+					React.createElement('textarea', {
+						type: 'name',
+						name: 'postText',
+						placeholder: 'write post here: when finished, press the submit button to upload the post.',
+						value: this.state.postText,
+						onChange: this.handle_post_input_box,
+						required: true
+					})
+				),
+				React.createElement(
+					'div',
+					null,
+					React.createElement(
+						'button',
+						{ className: 'button',
+							type: 'submit',
+							name: 'Submit',
+							onClick: this.handle_post_submit },
+						'Submit Post'
+					)
+				)
+			),
 			React.createElement(
 				'div',
 				null,
-				'Post:',
-				React.createElement('input', {
-					type: 'name',
-					name: 'PostText',
-					placeholder: 'PostText',
-					value: this.state.PostText,
-					onChange: this.handle_post_input_box,
-					required: true
-				}),
-				React.createElement(
-					'button',
-					{ className: 'SubmitButton',
-						name: 'Submit',
-						onClick: this.handle_post_submit },
-					'Submit Post'
-				)
-			),
-			this.state.posts.map((item, index) => {
-				return React.createElement(PostItem, { post: item, key: index });
-			})
+				' Posts:',
+				this.state.posts.map((item, index) => {
+					return React.createElement(PostItem, { post: item, key: index });
+				})
+			)
 		);
+		//add posts.sort(predicate(date))
+		//map only 10 posts from server
+	}
+
+	update_post_list(updated_posts) {
+
+		this.setState({ posts: updated_posts });
+	}
+
+	async fetch_posts() {
+		const response = await fetch('/api/users/post/all', {
+			headers: { 'Authorization': 'BEARER ' + sessionStorage.getItem('accessToken') }
+		});
+		if (response.status == 200) {
+			const data = await response.json();
+			return data;
+		} else {
+			const err = await response.text();
+			alert(err);
+		}
 	}
 
 	async handle_post_submit() {
-		let posts;
 		const response = await fetch('/api/users/post', {
 			method: 'POST',
-			body: JSON.stringify({ PostText: this.state.PostText, PostName: "POST_NAME_SAMPLE", PostTime: Date.now() }),
+			body: JSON.stringify({ postText: this.state.postText }),
 			headers: {
 				'Authorization': 'BEARER ' + sessionStorage.getItem('accessToken'),
 				'Content-Type': 'application/json' }
@@ -147,7 +206,10 @@ class PostsListBox extends React.Component {
 		});
 
 		if (response.status == 200) {
-			const res = await this.update_post_list(response.body.post);
+			this.update_post_list((await this.fetch_posts()));
+			//const postItem = await response.json();
+			//const res =  this.update_post_list(postItem);	
+			//alert ("Success! Res: " + res)	  ;
 		} else {
 			const err = await response.text();
 			alert(err);

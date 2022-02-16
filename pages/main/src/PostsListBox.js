@@ -4,7 +4,7 @@ class PostItem extends React.Component
 	{
 		super(props);
 		this.handle_click = this.handle_click.bind( this );
-		this.state = { authorName: '', PostName: '', PostText: '', PostTime: '' };
+		this.state = { postAutherName: '', postText: '', postTime: '' };
 	}
 	
 	handle_click()
@@ -15,15 +15,28 @@ class PostItem extends React.Component
 
 	render() {
 		return <div className={ 'PostItem '}>
-					<li className='PostAuthorName'>{this.props.post.authorName}</li>		
-					<li className='PostName'>{this.props.post.PostName}</li>
-					<li className='PostText'>{this.props.post.PostText}</li>
-					<li className='PostTime'>{this.props.post.PostTime}</li>
+					<form className='formcontainer'>
+						<div className='container'>
+							<label ><strong>Author:</strong></label>
+							<label className='PostAuthorName'>{this.props.post.author.name}</label>
+					    </div>
+
+						<div className='container'>
+							<label ><strong>Text:</strong></label>
+							<textarea value={this.props.post.content.text} disabled={true} className='postText'></textarea>
+					    </div>
+
+						<div className='container'>
+							<label ><strong>Time:</strong></label>
+							<label className='postTime'>{this.props.post.content.date}</label>
+					    </div>
+
+					</form>
 			   </div>
 	}
 }
 
-
+//insert add button
 class PostsListBox extends React.Component 
 {	
 
@@ -34,7 +47,7 @@ class PostsListBox extends React.Component
 		this.handle_post_input_box = this.handle_post_input_box.bind(this);
 		this.handle_post_submit = this.handle_post_submit.bind(this);
 
-	    this.state = {posts: [], PostText: ""};
+	    this.state = {posts: [], postText: ""};
 		
 	}
 
@@ -46,55 +59,68 @@ class PostsListBox extends React.Component
 	}
 
 	//when fetch send authenticate!
-    async fetch_posts()
-    {
-        const response = await fetch('/api/users/post/all', {
-			headers: new Headers({'Authorization': 'BEARER ' + sessionStorage.getItem('accessToken')}),
-		});
-        if (response.status != 200){
-            throw new error('Error while fetching posts');
-          
-        }
-		const data = await response.json();
-		return data;
-    }
+   
 	
 	//should filter by time
-    update_post_list( newPosts )
-	{
-		this.setState( {posts : newPosts} );
-	}
+
 
     render() {
-			return <div className='PostsListBox'>
-						<div>
-						Post: 
-						<input
-							type="name"
-							name="PostText"
-							placeholder="PostText"
-							value={this.state.PostText} 
-							onChange={this.handle_post_input_box}
-							required
-						/>
+			return  <div className="main-block" >
+						<div className="container">
+							<div>
+								<textarea 
+								type="name"
+								name="postText"
+								placeholder="write post here: when finished, press the submit button to upload the post."
+								value={this.state.postText} 
+								onChange={this.handle_post_input_box}
+								required
+							/>
+							</div>
+							<div>
+								<button className = "button"
+									type="submit" 
+									name= "Submit"
+									onClick = {this.handle_post_submit}>
+									Submit Post
+								</button>
+							</div>
+						</div>	
 
-						<button className = "SubmitButton"
-							name= "Submit"
-							onClick = {this.handle_post_submit}>
-							Submit Post
-						</button>
-						</div>
+						<div > Recent Posts:
 						{this.state.posts.map( (item,index) => { return  <PostItem  post={item}  key={index}/>  }  ) } 
-			   </div>
-			   
+						</div>
+			  		 </div>
+			   //add posts.sort(predicate(date))
+			   //map only 10 posts from server
+	}
+
+	update_post_list( updated_posts )
+	{
+		
+		this.setState( {posts : updated_posts} );
+	}
+	
+	async fetch_posts()
+    {
+		 const response = await fetch('/api/users/post/all', {
+			headers: {'Authorization': 'BEARER ' + sessionStorage.getItem('accessToken')}
+		});
+        if (response.status == 200){
+            const data = await response.json();
+			return data;
+        }
+		else{
+			const err = await response.text();
+			alert( err );
+		}
 	}
 
 	async handle_post_submit(){
-		let posts ;
-		const response =	await fetch('/api/users/post', 
+		const response = await fetch('/api/users/post', 
 		{
 			method: 'POST',
-			body: JSON.stringify({PostText : this.state.PostText, PostName: "POST_NAME_SAMPLE", PostTime: Date.now()} ),
+			body: JSON.stringify({postText : this.state.postText}),
 			headers: { 
 				'Authorization': 'BEARER ' + sessionStorage.getItem('accessToken'),
 				'Content-Type': 'application/json' }
@@ -103,7 +129,10 @@ class PostsListBox extends React.Component
 
 		if ( response.status == 200 )
 		{
-		const res = await this.update_post_list(response.body.post);		  
+			this.update_post_list(await this.fetch_posts());
+			//const postItem = await response.json();
+			//const res =  this.update_post_list(postItem);	
+			//alert ("Success! Res: " + res)	  ;
 		}
 		else 
 		{

@@ -158,6 +158,7 @@ export function authenticateToken(req, res, next) {
 }
 
 export function userIsApproved(req, res, next) {
+
     if (users.some(user => user.id === req.id && user.userStatus === ACTIVE)) {
         next();
     } else {
@@ -172,16 +173,15 @@ export async function getPostById(id) {
 }
 //how to read this json
 export async function createPost(post, userId) {
-
-    const postId = generateId();
-    const userName = users.find(user => user.id === userId).name
-    posts.push({ postText:post.PostText, postId:postId, userName:post.userName, userId : userId, Time: post.time })
+    const sendingUserName = users.find(user => user.id === userId).name
+    let postItem = { author: { name : sendingUserName, id: userId }, content: { id : generateId(),text: post.postText, date : getDate()}};
+    posts.push(postItem)
     await saveData();
-    return postId
+    return postItem;
 }
 export function getIdUsingEmail(email) {
-    const user = users.find(user => user.email === email);
-    return user.id;
+    const userId = users.find(user => user.email === email).id;
+    return userId;
 }
 
 export async function deletePost(postId, userId) {
