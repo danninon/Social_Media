@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>Chat Page</title>
+	<!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+	<script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+	<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+	<script src="js/Chat.js"></script>
+     <link rel="stylesheet" type='text/css' href="css/chat.css">
+</head>
+
+<body>
+
+	<div id='Chat'>element</id>
+
+</body>
+
+<script>
+    const domContainer = document.querySelector('#Chat');
+    ReactDOM.render( React.createElement(Chat , null ), domContainer);
+</script>
+
+
+</html>
