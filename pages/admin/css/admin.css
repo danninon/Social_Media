@@ -1,0 +1,221 @@
+html, body {
+  display: flex;
+  height: 100%;
+  padding: 5
+}
+
+body.div,h1,form,input,p{
+      padding: 3;
+      margin: 3;
+      outline: none;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 16px;
+      color: #666;
+}
+body.textarea{
+  padding: auto;
+  margin: auto;
+  size: auto;
+}
+h1 {
+  padding: 10px 0;
+  font-size: 32px;
+  font-weight: 300;
+  text-align: center;
+  }
+  p {
+  font-size: 12px;
+  }
+  hr {
+  color: #a9a9a9;
+  opacity: 0.3;
+  }
+
+  .main-block {
+    
+    min-width: 500px;
+    min-height: 500px; 
+    max-width: 1000px;
+    max-height: 1000px;
+    padding: 10px 0;
+    margin: auto;
+    border-radius: 5px; 
+    border: solid 1px #ccc;
+    box-shadow: 1px 2px 5px rgba(0,0,0,.31); 
+    background: #ebebeb; 
+    }
+    form {
+    margin: 0 30px;
+    }
+
+
+    
+     
+      
+      #icon {
+      display: inline-block;
+      padding: 9.3px 15px;
+      box-shadow: 1px 2px 5px rgba(0,0,0,.09); 
+      background: #1c87c9;
+      color: #fff;
+      text-align: center;
+      }
+  
+      button {
+        box-shadow: 1px 2px 5px rgb(119 43 43 / 9%); 
+        text-align: center;
+        display: inline-block;
+        padding: 6px 15px;
+        width: 16%;
+        margin: 10px;
+        border-radius: 5px; 
+        border:solid;
+        background: #f5f2f2; 
+        font-size: 14px;
+        font-weight: 600;
+        color: rgb(43 124 68);
+        }
+
+      button:hover {
+      background: #26a9e0;
+      }
+
+*{
+  padding: 3px;
+  margin: auto;
+  padding: auto;
+}
+.SubmitButton
+{
+  padding: 3px;
+
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+    border-radius: 0.25rem;
+  
+}
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+  
+  /* Hide default HTML checkbox */
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* The slider */
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+
+  .formcontainer {
+    text-align: left;
+  
+    }
+    .container {
+    
+    text-align:left;
+    border:solid;
+        }
+
+  .transparent
+{
+    opacity: 0
+}
+
+    .visible
+{
+    opacity: 100
+}
+   
+.PostsListBox{
+    margin: 5rem;
+    border-style:solid;
+    color: blue;
+    overflow: scroll;
+}
+
+.PostItem
+{
+  color: #15b562;
+  padding: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+  cursor: pointer;
+}
+
+.singlepost .PostAuthorName{
+   font-weight:600;
+}
+
+.single-post .PostName{
+  text-align: center; 
+	color: #15b562;
+}
+
+.single-post .PostText{
+  text-align: center; 
+  color: black;
+}
+
+.PostsListBox
+{
+    margin-right: auto;
+    margin-left:  auto;
+    max-width: 960px;
+    padding-right: 10px;
+    padding-left:  10px;
+    border-style: solid;
+}

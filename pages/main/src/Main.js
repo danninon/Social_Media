@@ -7,15 +7,23 @@ class Main extends React.Component {
       accessToken: accessToken,
       loggedUser: ""
     };
-    if (!sessionStorage.getItem(accessToken)){
-      sessionStorage.setItem("accessToken", this.state.accessToken);
+    if (sessionStorage.getItem("accessToken") === null){
+      if(accessToken !== null){
+        sessionStorage.setItem("accessToken", accessToken);
+      }else{
+        //handleError
+      }
     }
    // let data = sessionStorage.getItem('key');
    // sessionStorage.removeItem('key');
    // sessionStorage.clear();
   }
   render() {
-    return <div> <PostsListBox  classname='PostListBox' name='Posts'/>  </div>
+    return <div>
+        <ToolBar className='ToolBar' />
+        <PostsListBox  classname='PostListBox' name='Posts'/> 
+
+     </div>
   }
   componentWillUnmount() 
   {

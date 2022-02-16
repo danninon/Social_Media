@@ -130,7 +130,7 @@ class PostsListBox extends React.Component {
 			React.createElement(
 				'div',
 				null,
-				' Posts:',
+				' Recent Posts:',
 				this.state.posts.map((item, index) => {
 					return React.createElement(PostItem, { post: item, key: index });
 				})
