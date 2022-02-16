@@ -1,0 +1,45 @@
+
+
+Post http://localhost:2718/users/signup
+Content-Type: application/json
+
+{
+   "email":"1234.com",
+   "name": "123",
+   "password": "321"
+}
+
+###
+
+Post http://localhost:2718/admin/approveUser
+Content-Type: application/json
+
+{
+    "id" : "35308989536515756"
+}
+
+###
+
+POST http://localhost:2718/users/login
+Content-Type: application/json
+
+{
+    "email": "123.com",
+    "password": "123"
+}
+
+
+###
+
+Get http://localhost:2718/users/post/all
+Authorization: Bearer -enter key here-
+
+###
+
+Get http://localhost:2718/users/getAllUsers
+Authorization: Bearer -enter key here-
+
+
+
+
+
