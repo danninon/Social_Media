@@ -1,0 +1,784 @@
+{
+	"info": {
+		"_postman_id": "a156bc31-14d4-4b63-8cb0-464d84fb9ae9",
+		"name": "LoginAdmin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "admin login",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Admin logged in', function (){\r",
+							"\t\t\t    pm.response.to.have.status(200);\r",
+							"                pm.globals.set('admin_token',pm.response.json().accessToken);\r",
+							"                })\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"email\": \"admin@api.com\", \"password\" : \"12341234\"}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "signup user1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('User1 signed up', function (){\r",
+							"\t\t\t     pm.response.to.have.status(200);\r",
+							"                 console.log(pm.response.json().id);\r",
+							"                 pm.globals.set('user1_id',pm.response.json().id);\r",
+							"                })\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"email\": \"a@api.com\", \"name\": \"a\", \"password\" : \"1\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/signup",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "approve user1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Admin approved user' , function (){\r",
+							"\t\t\t    pm.response.to.have.status(200);\r",
+							"                })"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "BEARER {{admin_token}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\": \"{{user1_id}}\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/admin/approveUser",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"approveUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login user1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							" pm.test('User1 logged in', function (){\r",
+							"\t\t\t pm.response.to.have.status(200);\r",
+							"             pm.globals.set('user1_token',pm.response.json().accessToken);\r",
+							"         })\r",
+							" \r",
+							" \r",
+							" \r",
+							"  "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"email\": \"a@api.com\", \"password\" : \"1\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "signup user2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('User1 signed up', function (){\r",
+							"\t\t\t     pm.response.to.have.status(200);\r",
+							"               //  console.log(pm.response.json().id);\r",
+							"                 pm.globals.set('user2_id',pm.response.json().id);\r",
+							"                })\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"email\": \"b@api.com\", \"name\": \"b\", \"password\" : \"2\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/signup",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "approve user2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Admin approved user' , function (){\r",
+							"\t\t\t    pm.response.to.have.status(200);\r",
+							"                })"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "BEARER {{admin_token}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\": \"{{user2_id}}\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/admin/approveUser",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"approveUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login user2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							" pm.test('User1 logged in', function (){\r",
+							"\t\t\t pm.response.to.have.status(200);\r",
+							"             pm.globals.set('user2_token',pm.response.json().accessToken);\r",
+							"         })\r",
+							" \r",
+							" \r",
+							" \r",
+							"  "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"email\": \"b@api.com\", \"password\" : \"2\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user 1 views users in system",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							" pm.test('User1 logged in', function (){\r",
+							"\t\t\t pm.response.to.have.status(200);\r",
+							"         })"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "BEARER {{user1_token}}",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/users/getallUsers",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"getallUsers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user1 sends message to user2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Message send from user 1 to user 2' , function (){\r",
+							"\t\t\t    pm.response.to.have.status(200);\r",
+							"                })"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "BEARER {{user1_token}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"text\" : \"Hey sexy, what's up?\", \"id\" : \"{{user2_id}}\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/message/all",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"message",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get messages user2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Admin approved user' , function (){\r",
+							"\t\t\t    pm.response.to.have.status(200);\r",
+							"                })"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "BEARER {{user2_token}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"text\" : \"Hey sexy, what's up?\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/message/all",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"message",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user1 creates post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('User1 creates a post' , function (){\r",
+							"\t\t\t    pm.response.to.have.status(200);\r",
+							"                pm.globals.set('post1_id',pm.response.json().postid);\r",
+							"                })"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "BEARER {{user1_token}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"message\": \"first post text\"} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/post/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"post",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin deletes new post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('admin delete post' , function (){\r",
+							"\t\t\t    pm.response.to.have.status(200);\r",
+							"                })"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "BEARER {{admin_token}}",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/admin/deletePost/{{post1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"deletePost",
+						"{{post1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin requests to send global message",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('' , function (){\r",
+							"\t\t\t    pm.response.to.have.status(200);\r",
+							"                })"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "BEARER {{admin_token}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"text\": \"test123\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/admin/sendMessageToAllUsers",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"sendMessageToAllUsers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin inactivates user2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('admin inactivates user2' , function (){\r",
+							"\t\t\t    pm.response.to.have.status(200);\r",
+							"                })"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "BEARER {{admin_token}}",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/admin/suspend/{{user2_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"suspend",
+						"{{user2_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin deletes user 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('admin deletes user 1' , function (){\r",
+							"\t\t\t    pm.response.to.have.status(200);\r",
+							"                })"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "BEARER {{admin_token}}",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/admin/deleteUser/{{user1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"admin",
+						"deleteUser",
+						"{{user1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user 2 views all users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							" pm.test('user 2 views all users', function (){\r",
+							"\t\t\t pm.response.to.have.status(200);\r",
+							"         })"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "BEARER {{admin_token}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/users/getallUsers",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"getallUsers"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"",
+					"let jsonData = pm.response.json();",
+					"JSON.stringify(jsonData)",
+					"console.log(jsonData);",
+					"",
+					"pm.test(\"Your test name\", function () {",
+					"  ",
+					"   // pm.expect(jsonData.value).to.eql(100);",
+					"});",
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "adminToken",
+			"value": "\"Bearer: \"",
+			"type": "string"
+		},
+		{
+			"key": "url",
+			"value": "http://localhost:2718",
+			"type": "string"
+		}
+	]
+}

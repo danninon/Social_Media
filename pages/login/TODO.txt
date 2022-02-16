@@ -1,0 +1,2 @@
+1)move parameters to html V
+2)Signup does not inform on success bug
