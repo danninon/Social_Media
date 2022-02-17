@@ -3,8 +3,8 @@ class Login extends React.Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleSwitchLoginSignUp = this.handleSwitchLoginSignUp.bind(this);
-    this.state = { name: '', email: '', password: '', checkbox: 'signup' };
+    //this.handleSwitchLoginSignUp = this.handleSwitchLoginSignUp.bind(this);
+    this.state = { name: '', email: '', password: '', authentication: 'signup' };
   }
 
   render() {
@@ -25,24 +25,16 @@ class Login extends React.Component {
           { className: 'formcontainer' },
           React.createElement(
             'div',
-            { className: 'account-type' },
-            React.createElement('input', { type: 'radio', value: 'none', id: 'radioOne', name: 'account', checked: '', onChange: this.handleSwitchLoginSignUp }),
-            React.createElement(
-              'label',
-              { htmlFor: 'radioOne', className: 'radio' },
-              'Login'
-            ),
-            React.createElement('input', { type: 'radio', value: 'none', id: 'radioTwo', name: 'account', onChange: this.handleSwitchLoginSignUp }),
-            React.createElement(
-              'label',
-              { htmlFor: 'radioTwo', className: 'radio' },
-              'Signup'
-            )
+            { className: 'authentication-type', onChange: this.handleChange, value: this.state.authentication, required: true },
+            React.createElement('input', { type: 'radio', value: 'login', name: 'authentication' }),
+            ' Login',
+            React.createElement('input', { type: 'radio', value: 'signup', name: 'authentication' }),
+            'Sign-Up'
           ),
           React.createElement('hr', null),
           React.createElement(
             'div',
-            { className: this.state.checkbox == "signup" ? "visible container" : "transparent container" },
+            { className: this.state.authentication == "signup" ? "visible container" : "transparent container" },
             React.createElement(
               'label',
               { htmlFor: 'username' },
@@ -56,9 +48,9 @@ class Login extends React.Component {
               type: 'name',
               name: 'name',
               placeholder: 'name',
-              value: this.state.name ? this.state.name : "",
+              value: this.state.name,
               onChange: this.handleChange,
-              required: this.state.checkbox == 'signup'
+              required: this.state.authentication == 'signup'
             })
           ),
           React.createElement('hr', null),
@@ -115,16 +107,30 @@ class Login extends React.Component {
     );
   }
 
-  async handleSwitchLoginSignUp(event) {
-    this.state.checkbox == 'login' ? this.setState({ checkbox: 'signup' }) : this.setState({ checkbox: 'login' });
-  }
+  // async handleSwitchLoginSignUp(event) {
+
+
+  //   this.setState({ authentication: event.target })
+
+
+  //   // if (this.state.authentication == 'login'){
+  //   //   if (event.target != 'login'){
+  //   //     this.setState({ authentication: 'login' });
+  //   //   }
+  //   // }
+  //   // else{
+  //   //   if (event.target != 'signup'){
+  //   //     this.setState({ authentication: 'signup' });
+  //   //   }
+  //   // }
+  // }
 
   async handleSubmit(event) {
 
     let response;
     try {
       const { name, email, password } = this.state;
-      if (this.state.checkbox == 'signup') {
+      if (this.state.authentication == 'signup') {
         response = await fetch('/api/users/signup/', {
           method: 'POST',
           body: JSON.stringify({ name: name, email: email, password: password }),
