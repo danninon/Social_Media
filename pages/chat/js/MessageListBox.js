@@ -91,13 +91,13 @@ class MessageListBox extends React.Component {
 				'div',
 				{ className: 'main-block' },
 				React.createElement(
-					'h2',
-					null,
-					'Message'
-				),
-				React.createElement(
 					'div',
 					{ className: 'container' },
+					React.createElement(
+						'h2',
+						null,
+						'Message'
+					),
 					React.createElement('textarea', {
 						type: 'name',
 						name: 'messageText',

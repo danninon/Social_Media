@@ -32,11 +32,9 @@ h1 {
   }
 
   .main-block {
-    
-    min-width: 500px;
-    min-height: 500px; 
-    max-width: 1000px;
-    max-height: 1000px;
+   
+    min-width: 250px;
+    min-height: 250px; 
     padding: 10px 0;
     margin: auto;
     border-radius: 5px; 
@@ -48,32 +46,19 @@ h1 {
     margin: 0 30px;
     }
 
-
-    
-     
-      
-      #icon {
-      display: inline-block;
-      padding: 9.3px 15px;
-      box-shadow: 1px 2px 5px rgba(0,0,0,.09); 
-      background: #1c87c9;
-      color: #fff;
-      text-align: center;
-      }
-  
       button {
         box-shadow: 1px 2px 5px rgb(119 43 43 / 9%); 
         text-align: center;
-        display: inline-block;
-        padding: 6px 15px;
-        width: 16%;
+        display:initial;
+        float: left;
+        width: 20%;
         margin: 10px;
         border-radius: 5px; 
-        border:solid;
+     
         background: #f5f2f2; 
-        font-size: 14px;
+        font-size: 12px;
         font-weight: 600;
-        color: rgb(43 124 68);
+        color: rgb(135 100 131);
         }
 
       button:hover {
@@ -111,55 +96,7 @@ h1 {
     height: 0;
   }
   
-  /* The slider */
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    -webkit-transition: .4s;
-    transition: .4s;
-  }
   
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
-  }
-  
-  input:checked + .slider {
-    background-color: #2196F3;
-  }
-  
-  input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
-  }
-  
-  input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-  }
-  
-  /* Rounded sliders */
-  .slider.round {
-    border-radius: 34px;
-  }
-  
-  .slider.round:before {
-    border-radius: 50%;
-  }
-
-
   .formcontainer {
     text-align: left;
   
@@ -167,7 +104,7 @@ h1 {
     .container {
     
     text-align:left;
-    border:solid;
+   
         }
 
   .transparent
@@ -210,12 +147,3 @@ h1 {
   color: black;
 }
 
-.PostsListBox
-{
-    margin-right: auto;
-    margin-left:  auto;
-    max-width: 960px;
-    padding-right: 10px;
-    padding-left:  10px;
-    border-style: solid;
-}

@@ -21,7 +21,7 @@ class Chat extends React.Component
     render() {
         return <div>
             <ToolBar className='ToolBar' />
-            <MessageListBox className='messageListBox' />
+            <MessageListBox className='formcontainer' />
          </div>
       }
 }
