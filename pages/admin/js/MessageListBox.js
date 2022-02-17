@@ -115,17 +115,9 @@ class MessageListBox extends React.Component {
 							type: 'submit',
 							name: 'Submit',
 							onClick: this.handle_message_submit },
-						'Send Message'
+						'Send Global Message'
 					)
 				)
-			),
-			React.createElement(
-				'div',
-				null,
-				' Recent Messages to me:',
-				this.state.messages.map((item, index) => {
-					return React.createElement(MessageItem, { message: item, key: index });
-				})
 			)
 		);
 		//add posts.sort(predicate(date))
