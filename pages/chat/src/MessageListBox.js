@@ -9,7 +9,7 @@ class MessageItem extends React.Component
 	
 	render() {
 		return <div className={ 'MessageItem '}>
-					<form className='formcontainer'>
+					
 						<div className='container'>
 							<label ><strong>From:</strong></label>
 							<label className='messageAuthorName'>{this.props.message.from.name}</label>
@@ -26,7 +26,6 @@ class MessageItem extends React.Component
 							<label className='messageTime'>{this.props.message.date}</label>
 					    </div>
 
-					</form>
 			   </div>
 	}
 }
@@ -41,7 +40,7 @@ class MessageListBox extends React.Component
 	
 		this.hande_message_input_box = this.hande_message_input_box.bind(this);
 		this.handle_message_submit = this.handle_message_submit.bind(this);
-	    this.state = {messages: [], messageText: ""};
+	    this.state = {messages: [], messageText: '', messageRecipient: ''};
 		
 	}
 
@@ -56,31 +55,46 @@ class MessageListBox extends React.Component
 
 
     render() {
-			return  <div className="main-block" >
-						<div className="container">
-							<div>
-								<textarea 
-								type="name"
-								name="messageText"
-								placeholder="write message here: when finished, press the submit button to upload the message."
-								value={this.state.messageText} 
-								onChange={this.hande_message_input_box}
-								required
-							/>
-							</div>
-							<div>
-								<button className = "button"
-									type="submit" 
-									name= "Submit"
-									onClick = {this.handle_message_submit}>
-									Send Global Message
-								</button>
-							</div>
-						</div>	
-			 </div>
-			   //add posts.sort(predicate(date))
-			   //map only 10 posts from server
-	}
+		return <div className="formcontainer" >
+		<div className="main-block">
+			<h2>Message</h2>
+			<div className="container"> 
+			
+				<textarea 
+				type="name"
+				name="messageText"
+				placeholder="write message here: when finished, press the submit button to upload the message."
+				value={this.state.messageText} 
+				onChange={this.hande_message_input_box}
+				required
+				/>
+
+				<hr></hr>
+				
+				<h2>Recipient</h2>
+					<input 
+					type="id"
+					name="messageRecipient"
+					placeholder="write recipient's id here."
+					value={this.state.messageRecipient} 
+					onChange={this.hande_message_input_box}
+					required
+				/>
+
+				<button className = "button"
+					type="submit" 
+					name= "Submit"
+					onClick = {this.handle_message_submit}>
+					Send Message
+				</button>
+				<div className='container'>
+					<div>{this.state.messages.map( (item,index) => { return  <MessageItem  message={item}  key={index}/>  }  ) } </div>	
+				</div>
+			</div>
+		</div>
+	</div>
+}
+
 
 	update_message_list( updated_messages )
 	{
