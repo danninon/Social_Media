@@ -18,8 +18,7 @@ class Admin extends React.Component {
 
 
     //should filter by time
-
-
+    //adminOptions should be a different component
     render() {
         return React.createElement(
             'div',
@@ -37,7 +36,7 @@ class Admin extends React.Component {
                         null,
                         React.createElement(
                             'label',
-                            { htmlFor: 'password' },
+                            { htmlFor: 'id' },
                             React.createElement(
                                 'strong',
                                 null,
@@ -86,7 +85,8 @@ class Admin extends React.Component {
                         { type: 'submit', className: 'button' },
                         'Change Status'
                     )
-                )
+                ),
+                React.createElement(MessageListBox, { className: 'MessageListBox' })
             )
         );
     }
@@ -100,6 +100,7 @@ class Admin extends React.Component {
     async handleSubmit(event) {
 
         try {
+            let err;
             let fetch_url = '/api/admin';
             let body = { id: this.state.id, status: this.state.status };
             let method;
@@ -114,7 +115,7 @@ class Admin extends React.Component {
                     break;
                 case SUSPENDED:
                     fetch_url = fetch_url + '/suspend/' + this.state.id;
-                    method = 'POST';
+                    method = 'PUT';
 
                     break;
                 case DELETED:
@@ -125,16 +126,17 @@ class Admin extends React.Component {
                     throw new error(this.state.status + " is not an option");
                     break;
             }
-            response = await fetch(fetch_url, { method: method,
+            const response = await fetch(fetch_url, { method: method,
                 body: JSON.stringify(body),
                 headers: headers });
 
-            if (response.status == 200) {} else {
-                const err = await response.text();
-                alert(err);
+            if (response.status == 200) {
+                window.alert("action successful\nUser status: " + (await response));
+            } else {
+                throw new error(response.text());
             }
         } catch (e) {
-            window.alert(response.text);
+            window.alert(e.text);
         }
     }
 
@@ -205,3 +207,180 @@ class ToolBar extends React.Component {
         window.location.href = '/chat/chat.html';
     }
 }
+
+class MessageItem extends React.Component {
+	constructor(props) {
+		super(props);
+		//this.handle_click = this.handle_click.bind( this );
+		//this.state = { messageAuthorName: '', messageText: '', messageTime: '' };
+	}
+
+	render() {
+		return React.createElement(
+			'div',
+			{ className: 'MessageItem ' },
+			React.createElement(
+				'form',
+				{ className: 'formcontainer' },
+				React.createElement(
+					'div',
+					{ className: 'container' },
+					React.createElement(
+						'label',
+						null,
+						React.createElement(
+							'strong',
+							null,
+							'From:'
+						)
+					),
+					React.createElement(
+						'label',
+						{ className: 'messageAuthorName' },
+						this.props.message.from.name
+					)
+				),
+				React.createElement(
+					'div',
+					{ className: 'container' },
+					React.createElement(
+						'label',
+						null,
+						React.createElement(
+							'strong',
+							null,
+							'Text:'
+						)
+					),
+					React.createElement('textarea', { value: this.props.message.text, disabled: true, className: 'messageText' })
+				),
+				React.createElement(
+					'div',
+					{ className: 'container' },
+					React.createElement(
+						'label',
+						null,
+						React.createElement(
+							'strong',
+							null,
+							'Time:'
+						)
+					),
+					React.createElement(
+						'label',
+						{ className: 'messageTime' },
+						this.props.message.date
+					)
+				)
+			)
+		);
+	}
+}
+
+//insert add button
+class MessageListBox extends React.Component {
+
+	constructor(props) {
+		super(props);
+
+		this.hande_message_input_box = this.hande_message_input_box.bind(this);
+		this.handle_message_submit = this.handle_message_submit.bind(this);
+		this.state = { messages: [], messageText: "" };
+	}
+
+	//initial fetch
+	async componentDidMount() {
+		const messages = await this.fetch_messages();
+		this.update_message_list(messages);
+	}
+
+	//should filter by time
+
+
+	render() {
+		return React.createElement(
+			'div',
+			{ className: 'main-block' },
+			React.createElement(
+				'div',
+				{ className: 'container' },
+				React.createElement(
+					'div',
+					null,
+					React.createElement('textarea', {
+						type: 'name',
+						name: 'messageText',
+						placeholder: 'write message here: when finished, press the submit button to upload the message.',
+						value: this.state.messageText,
+						onChange: this.hande_message_input_box,
+						required: true
+					})
+				),
+				React.createElement(
+					'div',
+					null,
+					React.createElement(
+						'button',
+						{ className: 'button',
+							type: 'submit',
+							name: 'Submit',
+							onClick: this.handle_message_submit },
+						'Send Message'
+					)
+				)
+			),
+			React.createElement(
+				'div',
+				null,
+				' Recent Messages to me:',
+				this.state.messages.map((item, index) => {
+					return React.createElement(MessageItem, { message: item, key: index });
+				})
+			)
+		);
+		//add posts.sort(predicate(date))
+		//map only 10 posts from server
+	}
+
+	update_message_list(updated_messages) {
+		this.setState({ messages: updated_messages });
+	}
+
+	async fetch_messages() {
+		const response = await fetch('/api/users/message/all', {
+			headers: { 'Authorization': 'BEARER ' + sessionStorage.getItem('accessToken') }
+		});
+		if (response.status == 200) {
+			const data = await response.json();
+			return data;
+		} else {
+			const err = await response.text();
+			alert(err);
+		}
+	}
+
+	async handle_message_submit() {
+		const response = await fetch('/api/admin/sendMessageToAllUsers', {
+			method: 'POST',
+			body: JSON.stringify({ messageText: this.state.messageText }),
+			headers: {
+				'Authorization': 'BEARER ' + sessionStorage.getItem('accessToken'),
+				'Content-Type': 'application/json' }
+
+		});
+
+		if (response.status == 200) {
+			this.update_message_list((await this.fetch_messages()));
+			//const postItem = await response.json();
+			//const res =  this.update_message_list(postItem);	
+			//alert ("Success! Res: " + res)	  ;
+		} else {
+			const err = await response.text();
+			alert(err);
+		}
+	}
+	async hande_message_input_box(event) {
+		this.setState({ [event.target.name]: event.target.value });
+	}
+
+};

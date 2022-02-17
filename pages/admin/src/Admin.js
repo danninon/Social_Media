@@ -19,16 +19,15 @@ class Admin extends React.Component {
     //when fetch send authenticate!
 
 
-    //should filter by time
-
-
+//should filter by time
+//adminOptions should be a different component
     render() {
         return <div>
             <ToolBar className='ToolBar' />
             <div className="adminOptions">Admin Options
                 <form className='changeStatus' onSubmit={this.handleSubmit}>
                     <div>
-                        <label htmlFor="password"><strong>UserId:</strong></label>
+                        <label htmlFor="id"><strong>UserId:</strong></label>
                         <input
                             type="id"
                             name="id"
@@ -50,8 +49,11 @@ class Admin extends React.Component {
 
                     <button type='submit' className='button'>Change Status</button>
                 </form>
+                <MessageListBox className='MessageListBox'></MessageListBox>
             </div>
+               
         </div>
+
     }
  
     // /approveUser
@@ -63,6 +65,7 @@ class Admin extends React.Component {
     async handleSubmit(event) {
         
         try{
+            let err;
        let fetch_url = '/api/admin';
        let body = {id : this.state.id, status : this.state.status};
        let method;
@@ -77,7 +80,7 @@ class Admin extends React.Component {
                 break;
             case SUSPENDED:
             fetch_url = fetch_url + '/suspend/' + this.state.id;
-            method = 'POST'
+            method = 'PUT'
            
                 break;
             case DELETED:
@@ -88,7 +91,7 @@ class Admin extends React.Component {
                 throw new error(this.state.status + " is not an option");
                 break;
         }
-        response = await fetch(fetch_url,
+        const response = await fetch(fetch_url,
                             {method : method,
                             body : JSON.stringify(body),
                             headers : headers})
@@ -96,15 +99,15 @@ class Admin extends React.Component {
     
     	if ( response.status == 200 )
 		{
-
+            window.alert("action successful\nUser status: "+await response);
 		}
 		else 
 		{
-			const err = await response.text();
-			alert( err );
+			throw new error(response.text());
+			
 		}
     }catch(e){
-        window.alert(response.text)
+        window.alert(e.text)
     }
     }
 
