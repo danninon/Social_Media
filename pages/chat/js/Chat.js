@@ -18,71 +18,8 @@ class Chat extends React.Component {
       'div',
       null,
       React.createElement(ToolBar, { className: 'ToolBar' }),
-      React.createElement(MessageListBox, { className: 'messageListBox' })
+      React.createElement(MessageListBox, { className: 'formcontainer' })
     );
-  }
-}
-
-class ToolBar extends React.Component {
-
-  constructor(props) {
-      super(props);
-      this.handle_redirect_admin = this.handle_redirect_admin.bind(this);
-      this.state = {};
-  }
-
-  //initial fetch
-  async componentDidMount() {}
-
-  //when fetch send authenticate!
-
-
-  //should filter by time
-
-
-  render() {
-      return React.createElement(
-          'div',
-          { className: 'ToolBar' },
-          React.createElement(
-              'button',
-              { className: 'button', onClick: this.handle_redirect_admin },
-              'Admin Page'
-          ),
-          React.createElement(
-              'button',
-              { className: 'button', onClick: this.handle_redirect_home },
-              'Home Page'
-          ),
-          React.createElement(
-              'button',
-              { className: 'button', onClick: this.handle_redirect_chat },
-              'Message Page'
-          ),
-          React.createElement(
-              'button',
-              { className: 'button', onClick: this.handle_redirect_about },
-              'About Page'
-          )
-      );
-  }
-
-  handle_redirect_admin() {
-      //if it is an admin allow this otherwise, show an error
-      window.location.href = '/admin/admin.html';
-  }
-  handle_redirect_home() {
-      //if not home already
-      window.location.href = '/main/main.html';
-  }
-
-  handle_redirect_about() {
-      //if not at about already
-      window.location.href = '/about/about.html';
-  }
-  handle_redirect_chat() {
-      //if not at chat already
-      window.location.href = '/chat/chat.html';
   }
 }
 
@@ -179,13 +116,13 @@ class MessageListBox extends React.Component {
 				'div',
 				{ className: 'main-block' },
 				React.createElement(
-					'h2',
-					null,
-					'Message'
-				),
-				React.createElement(
 					'div',
 					{ className: 'container' },
+					React.createElement(
+						'h2',
+						null,
+						'Message'
+					),
 					React.createElement('textarea', {
 						type: 'name',
 						name: 'messageText',
@@ -275,3 +212,66 @@ class MessageListBox extends React.Component {
 	}
 
 };
+
+class ToolBar extends React.Component {
+
+  constructor(props) {
+      super(props);
+      this.handle_redirect_admin = this.handle_redirect_admin.bind(this);
+      this.state = {};
+  }
+
+  //initial fetch
+  async componentDidMount() {}
+
+  //when fetch send authenticate!
+
+
+  //should filter by time
+
+
+  render() {
+      return React.createElement(
+          'div',
+          { className: 'ToolBar' },
+          React.createElement(
+              'button',
+              { className: 'button', onClick: this.handle_redirect_admin },
+              'Admin Page'
+          ),
+          React.createElement(
+              'button',
+              { className: 'button', onClick: this.handle_redirect_home },
+              'Home Page'
+          ),
+          React.createElement(
+              'button',
+              { className: 'button', onClick: this.handle_redirect_chat },
+              'Message Page'
+          ),
+          React.createElement(
+              'button',
+              { className: 'button', onClick: this.handle_redirect_about },
+              'About Page'
+          )
+      );
+  }
+
+  handle_redirect_admin() {
+      //if it is an admin allow this otherwise, show an error
+      window.location.href = '/admin/admin.html';
+  }
+  handle_redirect_home() {
+      //if not home already
+      window.location.href = '/main/main.html';
+  }
+
+  handle_redirect_about() {
+      //if not at about already
+      window.location.href = '/about/about.html';
+  }
+  handle_redirect_chat() {
+      //if not at chat already
+      window.location.href = '/chat/chat.html';
+  }
+}

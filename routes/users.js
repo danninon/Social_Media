@@ -121,7 +121,7 @@ router.post("/sendMessageToUser", db.authenticateToken, db.userIsApproved, async
         await db.sendMessageToUser(req.body.messageText, req.body.messageRecipientId, userId)
         res.status(200).json( );
     } catch (e) {
-        console.log(e.message);
+        //console.log(e.message);
         res.status(400).send(e);
     }
 })

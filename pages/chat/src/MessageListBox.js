@@ -57,9 +57,8 @@ class MessageListBox extends React.Component
     render() {
 		return <div className="formcontainer" >
 		<div className="main-block">
-			<h2>Message</h2>
 			<div className="container"> 
-			
+			<h2>Message</h2>
 				<textarea 
 				type="name"
 				name="messageText"
@@ -87,9 +86,7 @@ class MessageListBox extends React.Component
 					onClick = {this.handle_message_submit}>
 					Send Message
 				</button>
-				<div className='container'>
 					<div>{this.state.messages.map( (item,index) => { return  <MessageItem  message={item}  key={index}/>  }  ) } </div>	
-				</div>
 			</div>
 		</div>
 	</div>
