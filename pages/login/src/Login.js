@@ -3,8 +3,8 @@ class Login extends React.Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleSwitchLoginSignUp = this.handleSwitchLoginSignUp.bind(this);
-    this.state = { name: '', email: '', password: '', checkbox: 'signup' };
+    //this.handleSwitchLoginSignUp = this.handleSwitchLoginSignUp.bind(this);
+    this.state = { name: '', email: '', password: '', authentication: 'signup' };
   }
 
   render() {
@@ -15,25 +15,30 @@ class Login extends React.Component {
         <hr></hr>
         <div className="formcontainer">
 
-          <div className="account-type">
-            <input type="radio" value="none" id="radioOne" name="account" checked="" onChange={this.handleSwitchLoginSignUp}></input>
-            <label htmlFor="radioOne" className="radio">Login</label>
-            <input type="radio" value="none" id="radioTwo" name="account" onChange={this.handleSwitchLoginSignUp}></input>
-            <label htmlFor="radioTwo" className="radio">Signup</label>
+          <div className="authentication-type" onChange={this.handleChange} value={this.state.authentication} required >
+            <input type="radio" value="login" name="authentication" /> Login
+            <input type="radio" value="signup" name="authentication" />Sign-Up
           </div>
+          {/* 
+            <input type="radio" value={this.authentication == 'login'} id="login" name="login" checked="" onChange={this.handleChange} required></input>
+            <label htmlFor="login" className="radio">Login</label>
+            <input type="radio" value={this.authentication == 'signup'} id="signup" name="signup" checked="" onChange={this.handleChange} required></input>
+            <label htmlFor="signup" className="radio">Signup</label>
+            */}
+
 
           <hr></hr>
 
-          <div className={(this.state.checkbox == "signup") ? "visible container" : "transparent container"}>
+          <div className={(this.state.authentication == "signup") ? "visible container" : "transparent container"}>
 
             <label htmlFor="username"><strong>Username</strong></label>
             <input
               type="name"
               name="name"
               placeholder="name"
-              value={this.state.name ? this.state.name : ""}
+              value={this.state.name}
               onChange={this.handleChange}
-              required={this.state.checkbox == 'signup'}
+              required={this.state.authentication == 'signup'}
             />
           </div>
 
@@ -71,16 +76,30 @@ class Login extends React.Component {
     </div>
   }
 
-  async handleSwitchLoginSignUp(event) {
-    this.state.checkbox == 'login' ? this.setState({ checkbox: 'signup' }) : this.setState({ checkbox: 'login' });
-  }
+  // async handleSwitchLoginSignUp(event) {
+
+
+  //   this.setState({ authentication: event.target })
+
+
+  //   // if (this.state.authentication == 'login'){
+  //   //   if (event.target != 'login'){
+  //   //     this.setState({ authentication: 'login' });
+  //   //   }
+  //   // }
+  //   // else{
+  //   //   if (event.target != 'signup'){
+  //   //     this.setState({ authentication: 'signup' });
+  //   //   }
+  //   // }
+  // }
 
   async handleSubmit(event) {
 
     let response;
     try {
       const { name, email, password } = this.state;
-      if (this.state.checkbox == 'signup') {
+      if (this.state.authentication == 'signup') {
         response = await fetch('/api/users/signup/',
           {
             method: 'POST',
