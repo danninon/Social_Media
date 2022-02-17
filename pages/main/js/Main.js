@@ -26,6 +26,7 @@ class Main extends React.Component {
       React.createElement(PostsListBox, { classname: "PostListBox", name: "Posts" })
     );
   }
+
   componentWillUnmount() {
     //sessionStorage.clear();
   }
