@@ -93,6 +93,17 @@ router.get("/message/all", db.authenticateToken, db.userIsApproved,  (req, res) 
     res.send(JSON.stringify(messages));
 })
 
+router.post("/post", db.authenticateToken, db.userIsApproved, async (req, res) => {
+    try {
+        const postItem = await db.createPost(req.body, req.id);
+        res.json(postItem);
+    } catch (e) {
+        console.log(e.message);
+        res.status(400).send(e);
+    }
+    
+})
+
 router.get("/message/:id", db.authenticateToken, db.userIsApproved, async(req, res) => {
     try {
         const message = await db.getMessageById(req.params.id);
@@ -112,16 +123,6 @@ router.post("/sendMessageToUser", db.authenticateToken, db.userIsApproved, async
     }
 })
 
-router.post("/post", db.authenticateToken, db.userIsApproved, async (req, res) => {
-    try {
-        const postItem = await db.createPost(req.body, req.id);
-        res.json(postItem);
-    } catch (e) {
-        console.log(e.message);
-        res.status(400).send(e);
-    }
-    
-})
 
 router.delete("/:id", db.authenticateToken, db.userIsApproved, async (req, res) => {
     try {
