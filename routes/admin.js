@@ -54,6 +54,7 @@ router.get("/getAllUsers", (req, res) => {
     res.json(db.users);
 })
 
+
 router.post("/approveUser", async (req, res) => {
     try {
         let result = false;

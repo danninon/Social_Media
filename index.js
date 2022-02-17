@@ -26,7 +26,7 @@ try {
 		switch (ext){
 			case 'js': return 'text/javascript';
 			case 'css': return 'text/css';
-			case 'html': return 'text/html';
+			case 'html': return 'text/html'
 		}
 		return 'text/plain';
 	}

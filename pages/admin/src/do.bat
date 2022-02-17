@@ -1,2 +1,3 @@
-npx babel --presets react . --out-dir ..\js
+npx babel --presets react . --out-dir ..\js 
+
 
