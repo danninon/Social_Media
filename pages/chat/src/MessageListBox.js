@@ -40,7 +40,7 @@ class MessageListBox extends React.Component
 	
 		this.hande_message_input_box = this.hande_message_input_box.bind(this);
 		this.handle_message_submit = this.handle_message_submit.bind(this);
-	    this.state = {messages: [], messageText: '', messageRecipient: ''};
+	    this.state = {messages: [], messageText: '', messageRecipientId: ''};
 		
 	}
 
@@ -74,9 +74,9 @@ class MessageListBox extends React.Component
 				<h2>Recipient</h2>
 					<input 
 					type="id"
-					name="messageRecipient"
+					name="messageRecipientId"
 					placeholder="write recipient's id here."
-					value={this.state.messageRecipient} 
+					value={this.state.messageRecipientId} 
 					onChange={this.hande_message_input_box}
 					required
 				/>
@@ -115,10 +115,10 @@ class MessageListBox extends React.Component
 	}
 
 	async handle_message_submit(){
-		const response = await fetch('/api/admin/sendMessageToAllUsers', 
+		const response = await fetch('/api/users/sendMessageToUser/', 
 		{
 			method: 'POST',
-			body: JSON.stringify({messageText : this.state.messageText}),
+			body: JSON.stringify({messageText : this.state.messageText, messageRecipientId : this.state.messageRecipientId}),
 			headers: { 
 				'Authorization': 'BEARER ' + sessionStorage.getItem('accessToken'),
 				'Content-Type': 'application/json' }
