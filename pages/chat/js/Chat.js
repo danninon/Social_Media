@@ -101,8 +101,13 @@ class MessageListBox extends React.Component {
 
 	//initial fetch
 	async componentDidMount() {
-		const messages = await this.fetch_messages();
-		this.update_message_list(messages);
+		const messages = (await this.fetch_messages()).reverse();
+
+		const view_messages = []
+		for (let i = 0; i < 5; i++) {
+			if (messages.length > 0) { view_messages.push(messages.shift()); }
+		}
+		this.update_message_list(view_messages);
 	}
 
 	//should filter by time
@@ -180,6 +185,7 @@ class MessageListBox extends React.Component {
 		});
 		if (response.status == 200) {
 			const data = await response.json();
+			console.log(data);
 			return data;
 		} else {
 			const err = await response.text();
@@ -198,7 +204,7 @@ class MessageListBox extends React.Component {
 		});
 
 		if (response.status == 200) {
-			this.update_message_list((await this.fetch_messages()));
+			window.location.href = '/chat/chat.html';
 			//const postItem = await response.json();
 			//const res =  this.update_message_list(postItem);	
 			//alert ("Success! Res: " + res)	  ;

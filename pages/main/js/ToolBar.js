@@ -1,4 +1,4 @@
-class ToolBar extends React.Component {
+export default class ToolBar extends React.Component {
 
 	constructor(props) {
 		super(props);

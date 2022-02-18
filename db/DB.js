@@ -146,7 +146,7 @@ export function authenticateToken(req, res, next) {
     const token =  authHeader && authHeader.split(' ')[1]; //make sure theres the header => split
     if (token == null) return res.sendStatus(401); //authentication failure
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-        if (err) return res.sendStatus(403).send("invalid token");; //invalid token - no access
+        if (err) return res.status(403).send("invalid token");; //invalid token - no access
         req.id = getIdUsingEmail(user.email);
         req.token = token;
         if (deletedTokens[req.id] === token) {
@@ -212,8 +212,9 @@ export function getMessageById(id) {
     }
 }
 export async function sendMessageToUser(text, userTargetId, userId) {
-    const targetUser = users.find(user => user.id === userTargetId);
-    const sendingUser = users.find(user => user.id === userId)
+    console.log({users,userTargetId,userId})
+    const targetUser = users.find(user => user.id == userTargetId);
+    const sendingUser = users.find(user => user.id == userId)
     if (targetUser) {
         let msg = { from: { name: sendingUser.name, id: sendingUser.id }, to: { name: targetUser.name, id: targetUser.id }, text, id: generateId(), date: getDate() };
         messages.push(msg)
