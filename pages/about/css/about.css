@@ -1,158 +1,149 @@
-*{
-  padding: 3px;
-
-}
-
 html, body {
   display: flex;
   height: 100%;
+  padding: 5
 }
 
-body.div,h2,h1{
+body.div,h1,form,input,p{
+      padding: 3;
+      margin: 3;
+      outline: none;
       font-family: Roboto, Arial, sans-serif;
+      font-size: 16px;
       color: #666;
-      font-size: 20px;
-
 }
-
-body.div,label,input{
-      font-family: Roboto, Arial, sans-serif;
-      color: #666;
-      font-size: 15px;
-}
-
-
-
-/* container{
-  float: left;
-} */
-
-.container{
-  float:center;
- 
-}
-p {
-  font-size: 12px;
-}
-
-.left_container{
-    text-align:left;
+body.textarea{
+  padding: auto;
   margin: auto;
-  padding: 5px 0;
-  
+  size: auto;
 }
-
-
-hr {
+h1 {
+  padding: 10px 0;
+  font-size: 32px;
+  font-weight: 300;
+  text-align: center;
+  }
+  p {
+  font-size: 12px;
+  }
+  hr {
   color: #a9a9a9;
   opacity: 0.3;
-}
+  }
 
-.main-block {
-    min-width: 300;
-    min-height: 300px; 
-    padding: 5px 0;
+  .main-block {
+   
+    min-width: 250px;
+    min-height: 250px; 
+    padding: 10px 0;
     margin: auto;
     border-radius: 5px; 
-    border: solid 1px #6a8f98;
+    border: solid 1px #ccc;
     box-shadow: 1px 2px 5px rgba(0,0,0,.31); 
     background: #ebebeb; 
+    }
+    form {
+    margin: 0 30px;
+    }
 
-    float:active;
-    
-    text-align:center;
+      button {
+        box-shadow: 1px 2px 5px rgb(119 43 43 / 9%); 
+        text-align: center;
+        display:initial;
+        float: left;
+        width: 20%;
+        margin: 10px;
+        border-radius: 5px; 
+     
+        background: #f5f2f2; 
+        font-size: 12px;
+        font-weight: 600;
+        color: rgb(135 100 131);
+        }
 
+      button:hover {
+      background: #26a9e0;
+      }
+
+*{
+  padding: 3px;
+  margin: auto;
+  padding: auto;
 }
+.SubmitButton
+{
+  padding: 3px;
 
-
-form {
-  margin: 0 30px;
-}
-
-button {
-  box-shadow: 1px 2px 5px rgb(119 43 43 / 9%); 
-  text-align: center;    
-  margin: 10px;
-  border-radius: 5px; 
-  background: #f5f2f2; 
-  font-size: 12px;
-  font-weight: 600;
-  color: rgb(135 100 131);
-  
-  
-  float: center;
-}
-
-button:hover {
-  background: #26a9e0;
-}
-
-
-.hr{
- color: black 
-}
-
-/*merge with .hr*/
-.mySeperator{
-  color: black ;
-  background: black;
-  padding: 5px;     
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-  margin-left: auto;
-  margin-right: auto;
-  border-style:hidden;
-  border-width: 1px;
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+    border-radius: 0.25rem;
   
 }
 
-/*Login*/
+/* The switch - the box around the slider */
 .switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-}
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
   
+  /* Hide default HTML checkbox */
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  
+  .formcontainer {
+    text-align: left;
+  
+    }
+    .container {
+    
+    text-align:left;
+   
+        }
 
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
+  .transparent
+{
+    opacity: 0
 }
 
-/*login-name tag, homepage-admin tag*/
-.transparent
+    .visible
 {
-  opacity: 0
-}
-
-.visible
-{
-  opacity: 100
+    opacity: 100
 }
    
+.PostsListBox{
+    margin: 5rem;
+    border-style:solid;
+    color: blue;
+    overflow: scroll;
+}
 
-/* .PostItem
+.PostItem
 {
   color: #15b562;
-  padding: 5px;
-  margin-left: 5px;
-  margin-right: 5px;
+  padding: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
   cursor: pointer;
-} */
+}
 
-/*.singlepost .PostAuthorName{
+.singlepost .PostAuthorName{
    font-weight:600;
-} */
+}
 
-/* .single-post .PostName{
+.single-post .PostName{
   text-align: center; 
 	color: #15b562;
-} */
+}
 
-/* .single-post .PostText{
+.single-post .PostText{
   text-align: center; 
   color: black;
-} */
+}
 

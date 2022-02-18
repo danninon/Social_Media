@@ -57,11 +57,6 @@ router.post('/login', async (req, res, next) => {
 async function getUserByEmail(userEmail) {
     return db.users.find(user => user.email === userEmail);
 }
-
-async function getUserById(userId) {
-    return db.users.find(user => user.id === userId);
-}
-
 router.post("/signup", async (req, res) => {
     try {
         const userRequest = req.body;
@@ -112,9 +107,6 @@ router.post("/post", db.authenticateToken, db.userIsApproved, async (req, res) =
     
 })
 
-router.get("/getId", db.authenticateToken, db.userIsApproved,  (req, res) => {
-    res.send(JSON.stringify(req.id));})
-    
 router.get("/message/:id", db.authenticateToken, db.userIsApproved, async(req, res) => {
     try {
         const message = await db.getMessageById(req.params.id);
@@ -125,16 +117,9 @@ router.get("/message/:id", db.authenticateToken, db.userIsApproved, async(req, r
 })
 
 
-router.get("/getName", db.authenticateToken, db.userIsApproved, async (req, res) => {
-   try{
-        let user = await db.getUserById(req.params.id);
-        res.stringify(user.name);
-   }
-   catch (e) {
-        res.status(400).send(e.message);
-    }
-})
-
+router.get("/getId", db.authenticateToken, db.userIsApproved,  (req, res) => {
+    res.send(JSON.stringify(req.id));})
+    
 //export async function sendMessageToUser(text, userTargetId, userId) 
 router.post("/sendMessageToUser", db.authenticateToken, db.userIsApproved, async (req, res) => {
     try {
