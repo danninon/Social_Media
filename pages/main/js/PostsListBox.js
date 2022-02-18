@@ -231,4 +231,3 @@ class PostsListBox extends React.Component {
 	}
 
 };
-

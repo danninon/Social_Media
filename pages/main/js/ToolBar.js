@@ -3,14 +3,50 @@ class ToolBar extends React.Component {
 	constructor(props) {
 		super(props);
 		this.handle_redirect_admin = this.handle_redirect_admin.bind(this);
-		this.state = {};
-		this.listen_on_new_posts_or_messages = this.listen_on_new_posts_or_messages.bind(this);
-		this.listen_on_new_posts_or_messages();
+
+		this.state = { user_id: 0, user_name: '' };
 	}
 
 	//initial fetch
-	async componentDidMount() { }
+	async componentDidMount() {
+		const userId = await this.get_user_id();
 
+
+		//const userName = await this.get_user_name();
+
+		this.setState({ user_id: userId, user_name: 'Adventurer' });
+	}
+
+	getDate() {
+		let currentdate = new Date();
+		let datetime = currentdate.getDate() + "/" + (currentdate.getMonth() + 1) + "/" + currentdate.getFullYear() + " @ " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
+		return datetime;
+	}
+
+	async get_user_name() {
+		const response = await fetch('/api/users/getName', {
+			headers: { 'Authorization': 'BEARER ' + sessionStorage.getItem('accessToken') }
+		});
+		if (response.status == 200) {
+			const data = await response.json();
+			return data;
+		} else {
+			const err = await response.text();
+			alert(err);
+		}
+	}
+	async get_user_id() {
+		const response = await fetch('/api/users/getId', {
+			headers: { 'Authorization': 'BEARER ' + sessionStorage.getItem('accessToken') }
+		});
+		if (response.status == 200) {
+			const data = await response.json();
+			return data;
+		} else {
+			const err = await response.text();
+			alert(err);
+		}
+	}
 	//when fetch send authenticate!
 
 
@@ -22,8 +58,20 @@ class ToolBar extends React.Component {
 			'div',
 			{ className: 'ToolBar' },
 			React.createElement(
+				'h2',
+				null,
+				'Hello ' + this.state.user_name + '!'
+			),
+			React.createElement(
+				'h2',
+				null,
+				'Clock: ' + this.getDate()
+			),
+			React.createElement(
 				'button',
-				{ className: 'button', onClick: this.handle_redirect_admin },
+				{
+					className: this.state.user_id === 0 ? 'button' : "transparent container",
+					onClick: this.handle_redirect_admin },
 				'Admin Page'
 			),
 			React.createElement(

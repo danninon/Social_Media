@@ -57,9 +57,11 @@ hr {
     border: solid 1px #6a8f98;
     box-shadow: 1px 2px 5px rgba(0,0,0,.31); 
     background: #ebebeb; 
+
     float:active;
     
     text-align:center;
+
 }
 
 

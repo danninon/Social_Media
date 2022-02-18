@@ -225,7 +225,13 @@ export async function sendMessageToUser(text, userTargetId, userId) {
     }
 
 }
-
+export async function getUserById(id){
+    const sendingUser = users.find(user => user.id == id)
+    if (sendingUser != null){
+        return sendingUser
+    }
+    throw new Error("User Id does not exist");
+}
 export async function sendMessageToAllUsers(text) {
     users.forEach(user => {
         sendMessageToUser(text, user.id, k_AdminId);
