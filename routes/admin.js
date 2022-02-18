@@ -54,6 +54,7 @@ router.get("/getAllUsers", (req, res) => {
     res.json(db.users);
 })
 
+
 router.post("/approveUser", async (req, res) => {
     try {
         let result = false;
@@ -66,9 +67,20 @@ router.post("/approveUser", async (req, res) => {
     }
 })
 
-router.post("/sendMessageToAllUsers", (req, res) => {
+router.post("/post", db.authenticateToken, db.userIsApproved, async (req, res) => {
     try {
-        db.sendMessageToAllUsers(req.body.text);
+        const postItem = await db.createPost(req.body, req.id);
+        res.json(postItem);
+    } catch (e) {
+        console.log(e.message);
+        res.status(400).send(e);
+    }
+    
+})
+
+router.post("/sendMessageToAllUsers",async (req, res) => {
+    try {
+        await db.sendMessageToAllUsers(req.body.text);
         res.json("Massage sent");
     } catch (e) {
         console.log(e.message);
