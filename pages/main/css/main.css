@@ -65,6 +65,22 @@ h1 {
       background: #26a9e0;
       }
 
+      button.newbutton {
+        box-shadow: 1px 2px 5px rgb(119 43 43 / 9%); 
+        text-align: center;
+        display: inline-block;
+        padding: 6px 15px;
+        width: 8%;
+        margin: 10px;
+        border-radius: 5px; 
+        border:solid;
+        background: #f5f2f2; 
+        font-size: 14px;
+        font-weight: 600;
+        color: rgb(43 124 68);
+        }
+
+
 *{
   padding: 3px;
   margin: auto;
