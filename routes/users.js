@@ -95,6 +95,7 @@ router.get("/message/all", db.authenticateToken, db.userIsApproved,  (req, res) 
 
 router.get("/getId", db.authenticateToken, db.userIsApproved,  (req, res) => {
     res.send(JSON.stringify(req.id));})
+    
 router.post("/post", db.authenticateToken, db.userIsApproved, async (req, res) => {
     try {
         const postItem = await db.createPost(req.body, req.id);

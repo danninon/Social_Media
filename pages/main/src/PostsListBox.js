@@ -148,7 +148,7 @@ class PostsListBox extends React.Component
 
 		if ( response.status == 200 )
 		{
-			this.update_post_list(await this.fetch_posts());
+			window.location.href = '/main/main.html';
 			//const postItem = await response.json();
 			//const res =  this.update_post_list(postItem);	
 			//alert ("Success! Res: " + res)	  ;
