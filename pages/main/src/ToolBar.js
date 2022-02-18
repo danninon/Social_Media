@@ -25,7 +25,9 @@ class ToolBar extends React.Component
                         <button className='button' onClick={this.handle_redirect_home}>Home Page</button>
                         <button className='button' onClick={this.handle_redirect_chat}>Message Page</button>
                         <button className='button' onClick={this.handle_redirect_about}>About Page</button>
-                        <button className='newbutton' onClick={this.handle_redirect_chat}>New Posts</button>
+						<button className='button' onClick={this.handle_redirect_login}>Logout</button>
+
+						<button className='newbutton' onClick={this.handle_redirect_chat}>New Posts</button>
                         <button className='newbutton' onClick={this.handle_redirect_about}>New Message</button>
                       </div>
 	}
@@ -48,6 +50,10 @@ class ToolBar extends React.Component
          //if not at chat already
         window.location.href = '/chat/chat.html';
     }
+
+	handle_redirect_login() {
+		sessionStorage.removeItem('accessToken')
+		window.location.href = '/login/login.html';	}
 
     async fetch_posts() {
 		const response = await fetch('/api/users/post/all', {
