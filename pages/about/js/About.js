@@ -1,43 +1,43 @@
 class About extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+	constructor(props) {
+		super(props);
+		this.state = {};
+	}
 
-  //initial fetch
-  async componentDidMount() {}
+	//initial fetch
+	async componentDidMount() { }
 
-  // async showFile(e)  {
-  //     e.preventDefault()
-  //     const reader = new FileReader()
-  //     reader.onload = async (e) => { 
-  //       const text = (e.target.result)
-  //       console.log(text)
-  //       alert(text)
-  //     };
-  //     reader.readAsText(e.target.files[0])
-  //   }
-  //  <input type="file" target="/readme.txt" onChange={(e) => this.showFile(e)} />
+	// async showFile(e)  {
+	//     e.preventDefault()
+	//     const reader = new FileReader()
+	//     reader.onload = async (e) => { 
+	//       const text = (e.target.result)
+	//       console.log(text)
+	//       alert(text)
+	//     };
+	//     reader.readAsText(e.target.files[0])
+	//   }
+	//  <input type="file" target="/readme.txt" onChange={(e) => this.showFile(e)} />
 
 
-  render() {
-    return React.createElement(
-      'div',
-      { className: 'main-block' },
-      React.createElement(ToolBar, { className: 'ToolBar' }),
-      React.createElement(
-        'div',
-        { className: 'container ' },
-        React.createElement(
-          'h1',
-          null,
-          'About'
-        ),
-        React.createElement('embed', { src: 'readme.txt' })
-      )
-    );
-  }
+	render() {
+		return React.createElement(
+			'div',
+			{ className: 'main-block' },
+			React.createElement(ToolBar, { className: 'ToolBar' }),
+			React.createElement(
+				'div',
+				{ className: 'container ' },
+				React.createElement(
+					'h1',
+					null,
+					'About'
+				),
+				React.createElement('embed', { src: 'readme.txt' })
+			)
+		);
+	}
 }
 class ToolBar extends React.Component {
 
@@ -45,10 +45,12 @@ class ToolBar extends React.Component {
 		super(props);
 		this.handle_redirect_admin = this.handle_redirect_admin.bind(this);
 		this.state = {};
+		this.listen_on_new_posts_or_messages = this.listen_on_new_posts_or_messages.bind(this);
+		this.listen_on_new_posts_or_messages();
 	}
 
 	//initial fetch
-	async componentDidMount() {}
+	async componentDidMount() { }
 
 	//when fetch send authenticate!
 
@@ -87,12 +89,12 @@ class ToolBar extends React.Component {
 			),
 			React.createElement(
 				'button',
-				{ className: 'newbutton', onClick: this.handle_redirect_chat },
+				{ className: 'newbutton', onClick: this.handle_redirect_home },
 				'New Posts'
 			),
 			React.createElement(
 				'button',
-				{ className: 'newbutton', onClick: this.handle_redirect_about },
+				{ className: 'newbutton', onClick: this.handle_redirect_chat },
 				'New Message'
 			)
 		);
@@ -128,6 +130,9 @@ class ToolBar extends React.Component {
 		if (response.status == 200) {
 			const data = await response.json();
 			return data;
+		} else if (response.status == 403) {
+			sessionStorage.removeItem('accessToken');
+			window.location.href = '/login/login.html';
 		} else {
 			const err = await response.text();
 			alert(err);
@@ -141,6 +146,9 @@ class ToolBar extends React.Component {
 		if (response.status == 200) {
 			const data = await response.json();
 			return data;
+		} else if (response.status == 403) {
+			sessionStorage.removeItem('accessToken');
+			window.location.href = '/login/login.html';
 		} else {
 			const err = await response.text();
 			alert(err);
@@ -154,6 +162,9 @@ class ToolBar extends React.Component {
 		if (response.status == 200) {
 			const data = await response.json();
 			return data;
+		} else if (response.status == 403) {
+			sessionStorage.removeItem('accessToken');
+			window.location.href = '/login/login.html';
 		} else {
 			const err = await response.text();
 			alert(err);

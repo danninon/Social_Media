@@ -1,71 +1,75 @@
-class ToolBar extends React.Component 
-{	
+class ToolBar extends React.Component {
 
-	constructor(props) 
-	{
+	constructor(props) {
 		super(props);
-        this.handle_redirect_admin = this.handle_redirect_admin.bind(this);
-	    this.state = {};
+		this.handle_redirect_admin = this.handle_redirect_admin.bind(this);
+		this.state = {};
+		this.listen_on_new_posts_or_messages = this.listen_on_new_posts_or_messages.bind(this);
+		this.listen_on_new_posts_or_messages();
 	}
 
-    //initial fetch
-    async componentDidMount() 
-	{
+	//initial fetch
+	async componentDidMount() {
 
 	}
 
 	//when fetch send authenticate!
-   
-	
+
+
 	//should filter by time
 
 
-    render() { return <div className='ToolBar'>
-                        <button className='button' onClick={this.handle_redirect_admin}>Admin Page</button>
-                        <button className='button' onClick={this.handle_redirect_home}>Home Page</button>
-                        <button className='button' onClick={this.handle_redirect_chat}>Message Page</button>
-                        <button className='button' onClick={this.handle_redirect_about}>About Page</button>
+	render() {
+		return <div className='ToolBar'>
+			<button className='button' onClick={this.handle_redirect_admin}>Admin Page</button>
+			<button className='button' onClick={this.handle_redirect_home}>Home Page</button>
+			<button className='button' onClick={this.handle_redirect_chat}>Message Page</button>
+			<button className='button' onClick={this.handle_redirect_about}>About Page</button>
 
-						<button className='button' onClick={this.handle_redirect_login}>Logout</button>
+			<button className='button' onClick={this.handle_redirect_login}>Logout</button>
 
-						<button className='newbutton' onClick={this.handle_redirect_chat}>New Posts</button>
+			<button className='newbutton' onClick={this.handle_redirect_home}>New Posts</button>
 
-                        <button className='newbutton' onClick={this.handle_redirect_about}>New Message</button>
-                      </div>
+			<button className='newbutton' onClick={this.handle_redirect_chat}>New Message</button>
+		</div>
 	}
 
 
-    handle_redirect_admin(){
-        //if it is an admin allow this otherwise, show an error
-        window.location.href = '/admin/admin.html';
-    }
-    handle_redirect_home() {
-        //if not home already
-         window.location.href = '/main/main.html';
-       }
- 
-     handle_redirect_about(){
-         //if not at about already
-         window.location.href = '/about/about.html';
-     }
-     handle_redirect_chat(){
-         //if not at chat already
-        window.location.href = '/chat/chat.html';
-    }
+	handle_redirect_admin() {
+		//if it is an admin allow this otherwise, show an error
+		window.location.href = '/admin/admin.html';
+	}
+	handle_redirect_home() {
+		//if not home already
+		window.location.href = '/main/main.html';
+	}
+
+	handle_redirect_about() {
+		//if not at about already
+		window.location.href = '/about/about.html';
+	}
+	handle_redirect_chat() {
+		//if not at chat already
+		window.location.href = '/chat/chat.html';
+	}
 
 
-	  handle_redirect_login() {
+	handle_redirect_login() {
 		sessionStorage.removeItem('accessToken')
-		window.location.href = '/login/login.html';	}
+		window.location.href = '/login/login.html';
+	}
 
 
-    async fetch_posts() {
+	async fetch_posts() {
 		const response = await fetch('/api/users/post/all', {
 			headers: { 'Authorization': 'BEARER ' + sessionStorage.getItem('accessToken') }
 		});
 		if (response.status == 200) {
 			const data = await response.json();
 			return data;
+		} else if (response.status == 403) {
+			sessionStorage.removeItem('accessToken');
+			window.location.href = '/login/login.html';
 		} else {
 			const err = await response.text();
 			alert(err);
@@ -79,6 +83,9 @@ class ToolBar extends React.Component
 		if (response.status == 200) {
 			const data = await response.json();
 			return data;
+		} else if (response.status == 403) {
+			sessionStorage.removeItem('accessToken');
+			window.location.href = '/login/login.html';
 		} else {
 			const err = await response.text();
 			alert(err);
@@ -92,6 +99,9 @@ class ToolBar extends React.Component
 		if (response.status == 200) {
 			const data = await response.json();
 			return data;
+		} else if (response.status == 403) {
+			sessionStorage.removeItem('accessToken');
+			window.location.href = '/login/login.html';
 		} else {
 			const err = await response.text();
 			alert(err);
