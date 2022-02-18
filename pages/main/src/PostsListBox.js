@@ -52,11 +52,30 @@ class PostsListBox extends React.Component
 	}
 
     //initial fetch
-    async componentDidMount() 
-	{
-		const posts = await this.fetch_posts();
-		this.update_post_list(posts);
+    async componentDidMount() {
+		this.user_id = await this.get_user_id();
+		let posts = (await this.fetch_posts()).reverse();
+		console.log({posts});
+		let myfirstPost = posts.find(post => post.author.id === this.user_id);
+		console.log({myfirstPost});
+
+		const viewsPost = []
+		if (myfirstPost) {
+			viewsPost.push(myfirstPost)
+		} else if (posts.length > 0) {
+			viewsPost.push(posts.shift());
+		}
+		for (let i = 0; i < 4; i++) {
+			if (myfirstPost && myfirstPost.content.id === posts[0].content.id) {
+				posts.shift();
+			}
+			if (posts.length > 0) { viewsPost.push(posts.shift()); }
+		}
+		console.log({viewsPost});
+
+		this.update_post_list(viewsPost);
 	}
+
 
 	//when fetch send authenticate!
    
