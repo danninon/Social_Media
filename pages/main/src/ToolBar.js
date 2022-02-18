@@ -2,79 +2,37 @@ class ToolBar extends React.Component {
 
 	constructor(props) {
 		super(props);
-       this.handle_redirect_admin = this.handle_redirect_admin.bind(this);
-		  this.state = {user_id:0,user_name:''}
-	    
+		this.handle_redirect_admin = this.handle_redirect_admin.bind(this);
+		this.state = {};
+		this.listen_on_new_posts_or_messages = this.listen_on_new_posts_or_messages.bind(this);
+		this.listen_on_new_posts_or_messages();
 	}
 
-    //initial fetch
-    async componentDidMount() 
-	{
-		const userId = await this.get_user_id();
-		
-		//const userName = await this.get_user_name();
-
+	//initial fetch
 	async componentDidMount() {
 
-
-		this.setState({user_id: userId , user_name:'Adventurer'});
 	}
 
-	getDate() {
-		let currentdate = new Date();
-		let datetime =  currentdate.getDate() + "/"
-			+ (currentdate.getMonth() + 1) + "/"
-			+ currentdate.getFullYear() + " @ "
-			+ currentdate.getHours() + ":"
-			+ currentdate.getMinutes() + ":"
-			+ currentdate.getSeconds();
-		return datetime;
-	}
-
-	
-	async get_user_name(){
-		const response = await fetch('/api/users/getName', {
-			headers: { 'Authorization': 'BEARER ' + sessionStorage.getItem('accessToken') }
-		});
-		if (response.status == 200) {
-			const data = await response.json();
-			return data;
-		} else {
-			const err = await response.text();
-			alert(err);
-		}
-	}
-	async get_user_id() {
-		const response = await fetch('/api/users/getId', {
-			headers: { 'Authorization': 'BEARER ' + sessionStorage.getItem('accessToken') }
-		});
-		if (response.status == 200) {
-			const data = await response.json();
-			return data;
-		} else {
-			const err = await response.text();
-			alert(err);
-		}
-	}
 	//when fetch send authenticate!
 
 
 	//should filter by time
 
 
+	render() {
+		return <div className='ToolBar'>
+			<button className='button' onClick={this.handle_redirect_admin}>Admin Page</button>
+			<button className='button' onClick={this.handle_redirect_home}>Home Page</button>
+			<button className='button' onClick={this.handle_redirect_chat}>Message Page</button>
+			<button className='button' onClick={this.handle_redirect_about}>About Page</button>
 
-    render() { return <div className='ToolBar'>
-						<h2>{'Hello ' + this.state.user_name +'!'}</h2>
-						<h2>{'Clock: ' + this.getDate()}</h2>
+			<button className='button' onClick={this.handle_redirect_login}>Logout</button>
 
-                        <button 
-							className={(this.state.user_id === 0) ? 'button' : "transparent container"}
-							onClick={this.handle_redirect_admin}>Admin Page</button>
+			<button className='newbutton' onClick={this.handle_redirect_home}>New Posts</button>
 
-                        <button className='button' onClick={this.handle_redirect_home}>Home Page</button>
-                        <button className='button' onClick={this.handle_redirect_chat}>Message Page</button>
-                        <button className='button' onClick={this.handle_redirect_about}>About Page</button>
-=
+			<button className='newbutton' onClick={this.handle_redirect_chat}>New Message</button>
+		</div>
+	}
 
 
 	handle_redirect_admin() {
