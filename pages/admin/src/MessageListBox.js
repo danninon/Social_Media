@@ -8,25 +8,25 @@ class MessageItem extends React.Component
 	}
 	
 	render() {
-		return <div className={ 'MessageItem '}>
-					<form className='formcontainer'>
-						<div className='container'>
+		return <div className={ 'MessageItem container '}>
+					
+						<div>
 							<label ><strong>From:</strong></label>
 							<label className='messageAuthorName'>{this.props.message.from.name}</label>
 					    </div>
 
 
-						<div className='container'>
+						<div>
 							<label ><strong>Text:</strong></label>
 							<textarea value={this.props.message.text} disabled={true} className='messageText'></textarea>
 					    </div>
 
-						<div className='container'>
+						<div>
 							<label ><strong>Time:</strong></label>
 							<label className='messageTime'>{this.props.message.date}</label>
 					    </div>
 
-					</form>
+					
 			   </div>
 	}
 }
@@ -56,8 +56,8 @@ class MessageListBox extends React.Component
 
 
     render() {
-			return  <div className="main-block" >
-						<div className="container">
+			return  <div className="container">
+						
 							<div>
 								<textarea 
 								type="name"
@@ -77,7 +77,7 @@ class MessageListBox extends React.Component
 								</button>
 							</div>
 						</div>	
-			 </div>
+			
 			   //add posts.sort(predicate(date))
 			   //map only 10 posts from server
 	}

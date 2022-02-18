@@ -14,59 +14,56 @@ class PostItem extends React.Component {
 			'div',
 			{ className: 'PostItem ' },
 			React.createElement(
-				'form',
-				{ className: 'formcontainer' },
+				'div',
+				{ className: 'container' },
 				React.createElement(
-					'div',
-					{ className: 'container' },
+					'label',
+					null,
 					React.createElement(
-						'label',
+						'strong',
 						null,
-						React.createElement(
-							'strong',
-							null,
-							'Author:'
-						)
-					),
-					React.createElement(
-						'label',
-						{ className: 'PostAuthorName' },
-						this.props.post.author.name
+						'Author:'
 					)
 				),
 				React.createElement(
-					'div',
-					{ className: 'container' },
-					React.createElement(
-						'label',
-						null,
-						React.createElement(
-							'strong',
-							null,
-							'Text:'
-						)
-					),
-					React.createElement('textarea', { value: this.props.post.content.text, disabled: true, className: 'postText' })
-				),
-				React.createElement(
-					'div',
-					{ className: 'container' },
-					React.createElement(
-						'label',
-						null,
-						React.createElement(
-							'strong',
-							null,
-							'Time:'
-						)
-					),
-					React.createElement(
-						'label',
-						{ className: 'postTime' },
-						this.props.post.content.date
-					)
+					'label',
+					{ className: 'PostAuthorName' },
+					this.props.post.author.name
 				)
-			)
+			),
+			React.createElement(
+				'div',
+				{ className: 'container' },
+				React.createElement(
+					'label',
+					null,
+					React.createElement(
+						'strong',
+						null,
+						'Text:'
+					)
+				),
+				React.createElement('textarea', { value: this.props.post.content.text, disabled: true, className: 'postText' })
+			),
+			React.createElement(
+				'div',
+				{ className: 'container' },
+				React.createElement(
+					'label',
+					null,
+					React.createElement(
+						'strong',
+						null,
+						'Time:'
+					)
+				),
+				React.createElement(
+					'label',
+					{ className: 'postTime' },
+					this.props.post.content.date
+				)
+			),
+			React.createElement('hr', null)
 		);
 	}
 }
@@ -83,10 +80,44 @@ export default class PostsListBox extends React.Component {
 		this.state = { posts: [], postText: "" };
 	}
 
+	async get_user_id() {
+		const response = await fetch('/api/users/getId', {
+			headers: { 'Authorization': 'BEARER ' + sessionStorage.getItem('accessToken') }
+		});
+		if (response.status == 200) {
+			const data = await response.json();
+			return data;
+		} else {
+			const err = await response.text();
+			alert(err);
+		}
+	}
+
 	//initial fetch
 	async componentDidMount() {
-		const posts = await this.fetch_posts();
-		this.update_post_list(posts);
+		this.user_id = await this.get_user_id();
+		let posts = (await this.fetch_posts()).reverse();
+		console.log({ posts });
+		let myfirstPost = posts.find(post => post.author.id === this.user_id);
+		console.log({ myfirstPost });
+
+		const viewsPost = [];
+		if (myfirstPost) {
+			viewsPost.push(myfirstPost);
+		} else if (posts.length > 0) {
+			viewsPost.push(posts.shift());
+		}
+		for (let i = 0; i < 4; i++) {
+			if (myfirstPost && myfirstPost.content.id === posts[0].content.id) {
+				posts.shift();
+			}
+			if (posts.length > 0) {
+				viewsPost.push(posts.shift());
+			}
+		}
+		console.log({ viewsPost });
+
+		this.update_post_list(viewsPost);
 	}
 
 	//when fetch send authenticate!
@@ -98,10 +129,15 @@ export default class PostsListBox extends React.Component {
 	render() {
 		return React.createElement(
 			'div',
-			{ className: 'main-block' },
+			{ className: 'container' },
 			React.createElement(
 				'div',
 				{ className: 'container' },
+				React.createElement(
+					'h2',
+					null,
+					' Submit Post: '
+				),
 				React.createElement(
 					'div',
 					null,
@@ -112,25 +148,25 @@ export default class PostsListBox extends React.Component {
 						value: this.state.postText,
 						onChange: this.handle_post_input_box,
 						required: true
-					})
-				),
-				React.createElement(
-					'div',
-					null,
+					}),
 					React.createElement(
 						'button',
 						{ className: 'button',
 							type: 'submit',
 							name: 'Submit',
 							onClick: this.handle_post_submit },
-						'Submit Post'
+						'Post'
 					)
 				)
 			),
 			React.createElement(
-				'div',
+				'h2',
 				null,
-				' Recent Posts:',
+				' Recent Posts: '
+			),
+			React.createElement(
+				'div',
+				{ className: 'left_container' },
 				this.state.posts.map((item, index) => {
 					return React.createElement(PostItem, { post: item, key: index });
 				})
@@ -169,7 +205,7 @@ export default class PostsListBox extends React.Component {
 		});
 
 		if (response.status == 200) {
-			this.update_post_list((await this.fetch_posts()));
+			window.location.href = '/main/main.html';
 			//const postItem = await response.json();
 			//const res =  this.update_post_list(postItem);	
 			//alert ("Success! Res: " + res)	  ;

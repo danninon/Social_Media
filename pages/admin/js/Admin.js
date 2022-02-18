@@ -22,72 +22,83 @@ class Admin extends React.Component {
     render() {
         return React.createElement(
             'div',
-            null,
+            { className: 'main-block' },
             React.createElement(ToolBar, { className: 'ToolBar' }),
             React.createElement(
-                'div',
-                { className: 'adminOptions' },
-                'Admin Options',
+                'h1',
+                null,
+                'Admin Options'
+            ),
+            React.createElement(
+                'form',
+                { className: 'container', onSubmit: this.handleSubmit },
                 React.createElement(
-                    'form',
-                    { className: 'changeStatus', onSubmit: this.handleSubmit },
+                    'h2',
+                    null,
+                    'Send Global Message'
+                ),
+                React.createElement(
+                    'div',
+                    null,
                     React.createElement(
-                        'div',
-                        null,
+                        'label',
+                        { htmlFor: 'id' },
                         React.createElement(
-                            'label',
-                            { htmlFor: 'id' },
-                            React.createElement(
-                                'strong',
-                                null,
-                                'UserId:'
-                            )
-                        ),
-                        React.createElement('input', {
-                            type: 'id',
-                            name: 'id',
-                            placeholder: 'id',
-                            value: this.state.id,
-                            onChange: this.handleChange,
-                            required: true
-                        })
-                    ),
-                    React.createElement(
-                        'div',
-                        null,
-                        React.createElement(
-                            'label',
+                            'strong',
                             null,
-                            'New status:'
-                        ),
-                        React.createElement(
-                            'select',
-                            { name: 'status', id: 'statusSelect', required: true, value: this.state.status, onChange: this.handleChange },
-                            React.createElement(
-                                'option',
-                                { value: 'active' },
-                                'Active'
-                            ),
-                            React.createElement(
-                                'option',
-                                { value: 'suspended' },
-                                'Suspended'
-                            ),
-                            React.createElement(
-                                'option',
-                                { value: 'deleted' },
-                                'Deleted'
-                            )
+                            'UserId:'
                         )
                     ),
+                    React.createElement('input', {
+                        type: 'id',
+                        name: 'id',
+                        placeholder: 'id',
+                        value: this.state.id,
+                        onChange: this.handleChange,
+                        required: true
+                    }),
                     React.createElement(
                         'button',
                         { type: 'submit', className: 'button' },
                         'Change Status'
                     )
                 ),
-                React.createElement(MessageListBox, { className: 'MessageListBox' })
-            )
+               
+                React.createElement(
+                    'h2',
+                    null,
+                    'Change User Status'
+                ),
+                React.createElement(
+                    'div',
+                    null,
+                    React.createElement(
+                        'h3',
+                        null,
+                        'New status:'
+                    ),
+                    React.createElement(
+                        'select',
+                        { name: 'status', id: 'statusSelect', required: true, value: this.state.status, onChange: this.handleChange },
+                        React.createElement(
+                            'option',
+                            { value: 'active' },
+                            'Active'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'suspended' },
+                            'Suspended'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'deleted' },
+                            'Deleted'
+                        )
+                    )
+                )
+            ),
+            React.createElement(MessageListBox, { className: 'container' })
         );
     }
 
@@ -207,6 +218,7 @@ class ToolBar extends React.Component {
         window.location.href = '/chat/chat.html';
     }
 }
+
 class MessageItem extends React.Component {
 	constructor(props) {
 		super(props);
@@ -217,59 +229,55 @@ class MessageItem extends React.Component {
 	render() {
 		return React.createElement(
 			'div',
-			{ className: 'MessageItem ' },
+			{ className: 'MessageItem container ' },
 			React.createElement(
-				'form',
-				{ className: 'formcontainer' },
+				'div',
+				null,
 				React.createElement(
-					'div',
-					{ className: 'container' },
+					'label',
+					null,
 					React.createElement(
-						'label',
+						'strong',
 						null,
-						React.createElement(
-							'strong',
-							null,
-							'From:'
-						)
-					),
-					React.createElement(
-						'label',
-						{ className: 'messageAuthorName' },
-						this.props.message.from.name
+						'From:'
 					)
 				),
 				React.createElement(
-					'div',
-					{ className: 'container' },
+					'label',
+					{ className: 'messageAuthorName' },
+					this.props.message.from.name
+				)
+			),
+			React.createElement(
+				'div',
+				null,
+				React.createElement(
+					'label',
+					null,
 					React.createElement(
-						'label',
+						'strong',
 						null,
-						React.createElement(
-							'strong',
-							null,
-							'Text:'
-						)
-					),
-					React.createElement('textarea', { value: this.props.message.text, disabled: true, className: 'messageText' })
+						'Text:'
+					)
+				),
+				React.createElement('textarea', { value: this.props.message.text, disabled: true, className: 'messageText' })
+			),
+			React.createElement(
+				'div',
+				null,
+				React.createElement(
+					'label',
+					null,
+					React.createElement(
+						'strong',
+						null,
+						'Time:'
+					)
 				),
 				React.createElement(
-					'div',
-					{ className: 'container' },
-					React.createElement(
-						'label',
-						null,
-						React.createElement(
-							'strong',
-							null,
-							'Time:'
-						)
-					),
-					React.createElement(
-						'label',
-						{ className: 'messageTime' },
-						this.props.message.date
-					)
+					'label',
+					{ className: 'messageTime' },
+					this.props.message.date
 				)
 			)
 		);
@@ -299,36 +307,33 @@ class MessageListBox extends React.Component {
 	render() {
 		return React.createElement(
 			'div',
-			{ className: 'main-block' },
+			{ className: 'container' },
 			React.createElement(
 				'div',
-				{ className: 'container' },
+				null,
+				React.createElement('textarea', {
+					type: 'name',
+					name: 'messageText',
+					placeholder: 'write message here: when finished, press the submit button to upload the message.',
+					value: this.state.messageText,
+					onChange: this.hande_message_input_box,
+					required: true
+				})
+			),
+			React.createElement(
+				'div',
+				null,
 				React.createElement(
-					'div',
-					null,
-					React.createElement('textarea', {
-						type: 'name',
-						name: 'messageText',
-						placeholder: 'write message here: when finished, press the submit button to upload the message.',
-						value: this.state.messageText,
-						onChange: this.hande_message_input_box,
-						required: true
-					})
-				),
-				React.createElement(
-					'div',
-					null,
-					React.createElement(
-						'button',
-						{ className: 'button',
-							type: 'submit',
-							name: 'Submit',
-							onClick: this.handle_message_submit },
-						'Send Global Message'
-					)
+					'button',
+					{ className: 'button',
+						type: 'submit',
+						name: 'Submit',
+						onClick: this.handle_message_submit },
+					'Send Global Message'
 				)
 			)
 		);
+
 		//add posts.sort(predicate(date))
 		//map only 10 posts from server
 	}

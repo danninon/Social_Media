@@ -8,59 +8,55 @@ class MessageItem extends React.Component {
 	render() {
 		return React.createElement(
 			'div',
-			{ className: 'MessageItem ' },
+			{ className: 'MessageItem container ' },
 			React.createElement(
-				'form',
-				{ className: 'formcontainer' },
+				'div',
+				null,
 				React.createElement(
-					'div',
-					{ className: 'container' },
+					'label',
+					null,
 					React.createElement(
-						'label',
+						'strong',
 						null,
-						React.createElement(
-							'strong',
-							null,
-							'From:'
-						)
-					),
-					React.createElement(
-						'label',
-						{ className: 'messageAuthorName' },
-						this.props.message.from.name
+						'From:'
 					)
 				),
 				React.createElement(
-					'div',
-					{ className: 'container' },
+					'label',
+					{ className: 'messageAuthorName' },
+					this.props.message.from.name
+				)
+			),
+			React.createElement(
+				'div',
+				null,
+				React.createElement(
+					'label',
+					null,
 					React.createElement(
-						'label',
+						'strong',
 						null,
-						React.createElement(
-							'strong',
-							null,
-							'Text:'
-						)
-					),
-					React.createElement('textarea', { value: this.props.message.text, disabled: true, className: 'messageText' })
+						'Text:'
+					)
+				),
+				React.createElement('textarea', { value: this.props.message.text, disabled: true, className: 'messageText' })
+			),
+			React.createElement(
+				'div',
+				null,
+				React.createElement(
+					'label',
+					null,
+					React.createElement(
+						'strong',
+						null,
+						'Time:'
+					)
 				),
 				React.createElement(
-					'div',
-					{ className: 'container' },
-					React.createElement(
-						'label',
-						null,
-						React.createElement(
-							'strong',
-							null,
-							'Time:'
-						)
-					),
-					React.createElement(
-						'label',
-						{ className: 'messageTime' },
-						this.props.message.date
-					)
+					'label',
+					{ className: 'messageTime' },
+					this.props.message.date
 				)
 			)
 		);
@@ -90,36 +86,33 @@ class MessageListBox extends React.Component {
 	render() {
 		return React.createElement(
 			'div',
-			{ className: 'main-block' },
+			{ className: 'container' },
 			React.createElement(
 				'div',
-				{ className: 'container' },
+				null,
+				React.createElement('textarea', {
+					type: 'name',
+					name: 'messageText',
+					placeholder: 'write message here: when finished, press the submit button to upload the message.',
+					value: this.state.messageText,
+					onChange: this.hande_message_input_box,
+					required: true
+				})
+			),
+			React.createElement(
+				'div',
+				null,
 				React.createElement(
-					'div',
-					null,
-					React.createElement('textarea', {
-						type: 'name',
-						name: 'messageText',
-						placeholder: 'write message here: when finished, press the submit button to upload the message.',
-						value: this.state.messageText,
-						onChange: this.hande_message_input_box,
-						required: true
-					})
-				),
-				React.createElement(
-					'div',
-					null,
-					React.createElement(
-						'button',
-						{ className: 'button',
-							type: 'submit',
-							name: 'Submit',
-							onClick: this.handle_message_submit },
-						'Send Global Message'
-					)
+					'button',
+					{ className: 'button',
+						type: 'submit',
+						name: 'Submit',
+						onClick: this.handle_message_submit },
+					'Send Global Message'
 				)
 			)
 		);
+
 		//add posts.sort(predicate(date))
 		//map only 10 posts from server
 	}

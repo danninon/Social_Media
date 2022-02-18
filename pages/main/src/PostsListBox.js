@@ -15,8 +15,7 @@ class PostItem extends React.Component
 
 	render() {
 		return <div className={ 'PostItem '}>
-					<form className='formcontainer'>
-						<div className='container'>
+					<div className='container'>
 							<label ><strong>Author:</strong></label>
 							<label className='PostAuthorName'>{this.props.post.author.name}</label>
 					    </div>
@@ -31,7 +30,7 @@ class PostItem extends React.Component
 							<label className='postTime'>{this.props.post.content.date}</label>
 					    </div>
 
-					</form>
+						<hr></hr>
 			   </div>
 	}
 }
@@ -51,6 +50,19 @@ class PostsListBox extends React.Component
 		
 	}
 
+	async get_user_id() {
+		const response = await fetch('/api/users/getId', {
+			headers: { 'Authorization': 'BEARER ' + sessionStorage.getItem('accessToken') }
+		});
+		if (response.status == 200) {
+			const data = await response.json();
+			return data;
+		} else {
+			const err = await response.text();
+			alert(err);
+		}
+	}
+	
     //initial fetch
     async componentDidMount() {
 		this.user_id = await this.get_user_id();
@@ -84,8 +96,9 @@ class PostsListBox extends React.Component
 
 
     render() {
-			return  <div className="main-block" >
+			return  <div className="container">
 						<div className="container">
+							<h2> Submit Post: </h2>
 							<div>
 								<textarea 
 								type="name"
@@ -94,19 +107,21 @@ class PostsListBox extends React.Component
 								value={this.state.postText} 
 								onChange={this.handle_post_input_box}
 								required
-							/>
-							</div>
-							<div>
+								/>
+
 								<button className = "button"
 									type="submit" 
 									name= "Submit"
 									onClick = {this.handle_post_submit}>
-									Submit Post
+									Post
 								</button>
 							</div>
 						</div>	
 
-						<div > Recent Posts:
+						
+
+						<h2> Recent Posts: </h2>
+						<div className='left_container'>
 						{this.state.posts.map( (item,index) => { return  <PostItem  post={item}  key={index}/>  }  ) } 
 						</div>
 			  		 </div>

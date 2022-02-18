@@ -22,39 +22,41 @@ class Admin extends React.Component {
 //should filter by time
 //adminOptions should be a different component
     render() {
-        return <div>
+        return <div className = 'main-block'>
             <ToolBar className='ToolBar' />
-            <div className="adminOptions">Admin Options
-                <form className='changeStatus' onSubmit={this.handleSubmit}>
-                    <div>
-                        <label htmlFor="id"><strong>UserId:</strong></label>
-                        <input
-                            type="id"
-                            name="id"
-                            placeholder="id"
-                            value={this.state.id}
-                            onChange={this.handleChange}
-                            required
-                        />
-                    </div>
 
-                    <div>
-                        <label>New status:</label>
-                        <select name="status" id="statusSelect" required value={this.state.status} onChange={this.handleChange}>
-                            <option value="active">Active</option>
-                            <option value="suspended">Suspended</option>
-                            <option value="deleted">Deleted</option>
-                        </select>
-                    </div>
-
-                    <button type='submit' className='button'>Change Status</button>
-                </form>
-                <MessageListBox className='MessageListBox'></MessageListBox>
-            </div>
-               
+            <h1>Admin Options</h1>    
+                  
+            <form className='container' onSubmit={this.handleSubmit}>                
+                <h2>Send Global Message</h2>
+                <div>
+                    <label htmlFor="id"><strong>UserId:</strong></label>
+                    <input
+                        type="id"
+                        name="id"
+                        placeholder="id"
+                        value={this.state.id}
+                        onChange={this.handleChange}
+                        required
+                    />
+                       <button type='submit' className='button'>Change Status</button>
+                </div>
+                
+         
+                
+                <h2>Change User Status</h2>
+                <div>
+                    <h3>New status:</h3>
+                    <select name="status" id="statusSelect" required value={this.state.status} onChange={this.handleChange}>
+                        <option value="active">Active</option>
+                        <option value="suspended">Suspended</option>
+                        <option value="deleted">Deleted</option>
+                    </select>
+                </div>
+            </form>
+            <MessageListBox className='container'></MessageListBox>
         </div>
-
-    }
+ }
  
     // /approveUser
 // /suspend/:id
