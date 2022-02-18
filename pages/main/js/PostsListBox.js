@@ -69,7 +69,7 @@ class PostItem extends React.Component {
 }
 
 //insert add button
-export default class PostsListBox extends React.Component {
+class PostsListBox extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -219,3 +219,4 @@ export default class PostsListBox extends React.Component {
 	}
 
 };
+

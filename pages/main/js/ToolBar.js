@@ -1,4 +1,4 @@
-export default class ToolBar extends React.Component {
+class ToolBar extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -41,6 +41,11 @@ export default class ToolBar extends React.Component {
 			),
 			React.createElement(
 				'button',
+				{ className: 'button', onClick: this.handle_redirect_login },
+				'Logout'
+			),
+			React.createElement(
+				'button',
 				{ className: 'newbutton', onClick: this.handle_redirect_chat },
 				'New Posts'
 			),
@@ -68,6 +73,11 @@ export default class ToolBar extends React.Component {
 	handle_redirect_chat() {
 		//if not at chat already
 		window.location.href = '/chat/chat.html';
+	}
+
+	handle_redirect_login() {
+		sessionStorage.removeItem('accessToken');
+		window.location.href = '/login/login.html';
 	}
 
 	async fetch_posts() {
