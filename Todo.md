@@ -5,30 +5,28 @@ V__ *order posts by last user post(if exists) => n-1 posts
 
 V__ ToolBar:
 V__ *indicate when a message && post received with requested redirect requests
-X__ *(optional)add user name
-X__ logout
+V__ logout
 X__ test functionality
 X__ INJECT
+X__ *(optional)add user name
 
 AdminPage:
 *Test functionality
-V_ *allow only admins to see
+X__ *allow only admins to see
 
 ChatPage:
-*Test functionality
-*order messages by date, n messages
+V__ *Test functionality
+V__ **order messages by date, n messages
 
 AboutPage:
 V__ *(Optional) read from txt file
 *update if notes are required
 
 LoginPage:
-*fix css radio bug
+V__ *fix css radio bug
 
 
 Overall:
 *fix use-case authentication passed =>sends to LoginPage(from every page)
 
-*update tool-bar to chat,admin,homepage,about
 *(Optional) create a UI to handle response of requests (alerts\component like tool-bar)
-*render similar to Message page, came out nicely (jsx,js,css)
