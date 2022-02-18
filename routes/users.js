@@ -114,6 +114,9 @@ router.get("/message/:id", db.authenticateToken, db.userIsApproved, async(req, r
 })
 
 
+router.get("/getId", db.authenticateToken, db.userIsApproved,  (req, res) => {
+    res.send(JSON.stringify(req.id));})
+    
 //export async function sendMessageToUser(text, userTargetId, userId) 
 router.post("/sendMessageToUser", db.authenticateToken, db.userIsApproved, async (req, res) => {
     try {

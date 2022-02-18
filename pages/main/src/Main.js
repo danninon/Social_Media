@@ -19,9 +19,9 @@ class Main extends React.Component {
    // sessionStorage.clear();
   }
   render() {
-    return <div>
+    return <div className='main-block'>
         <ToolBar className='ToolBar' />
-        <PostsListBox  classname='PostListBox' name='Posts'/> 
+        <PostsListBox/> 
 
      </div>
   }

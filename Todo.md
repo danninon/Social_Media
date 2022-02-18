@@ -1,23 +1,25 @@
 # JS_React_Node
 HomePage:
-*order posts by last user post(if exists) => n-1 posts
-if not => n posts
+V__ *order posts by last user post(if exists) => n-1 posts
+	if not => n posts
 
-ToolBar:
-*indicate when a message && post received with requested redirect requests
-*(optional)add user name
+V__ ToolBar:
+V__ *indicate when a message && post received with requested redirect requests
+X__ *(optional)add user name
+X__ logout
+X__ test functionality
+X__ INJECT
 
 AdminPage:
 *Test functionality
-*allow only admins to see button to this page
-*fix missing input
+V_ *allow only admins to see
 
 ChatPage:
 *Test functionality
 *order messages by date, n messages
 
 AboutPage:
-*(Optional) read from txt file
+V__ *(Optional) read from txt file
 *update if notes are required
 
 LoginPage:

@@ -25,6 +25,8 @@ class ToolBar extends React.Component
                         <button className='button' onClick={this.handle_redirect_home}>Home Page</button>
                         <button className='button' onClick={this.handle_redirect_chat}>Message Page</button>
                         <button className='button' onClick={this.handle_redirect_about}>About Page</button>
+                        <button className='newbutton' onClick={this.handle_redirect_chat}>New Posts</button>
+                        <button className='newbutton' onClick={this.handle_redirect_about}>New Message</button>
                       </div>
 	}
 
@@ -46,4 +48,71 @@ class ToolBar extends React.Component
          //if not at chat already
         window.location.href = '/chat/chat.html';
     }
+
+    async fetch_posts() {
+		const response = await fetch('/api/users/post/all', {
+			headers: { 'Authorization': 'BEARER ' + sessionStorage.getItem('accessToken') }
+		});
+		if (response.status == 200) {
+			const data = await response.json();
+			return data;
+		} else {
+			const err = await response.text();
+			alert(err);
+		}
+	}
+
+	async fetch_messages() {
+		const response = await fetch('/api/users/message/all', {
+			headers: { 'Authorization': 'BEARER ' + sessionStorage.getItem('accessToken') }
+		});
+		if (response.status == 200) {
+			const data = await response.json();
+			return data;
+		} else {
+			const err = await response.text();
+			alert(err);
+		}
+	}
+
+	async get_user_id() {
+		const response = await fetch('/api/users/getId', {
+			headers: { 'Authorization': 'BEARER ' + sessionStorage.getItem('accessToken') }
+		});
+		if (response.status == 200) {
+			const data = await response.json();
+			return data;
+		} else {
+			const err = await response.text();
+			alert(err);
+		}
+	}
+
+	async listen_on_new_posts_or_messages() {
+		console.log(this)
+		this.posts_number = (await this.fetch_posts()).length
+		this.messages_number = (await this.fetch_messages()).length
+		this.user_id = await this.get_user_id();
+		console.log(this.posts_number, this.messages_number, this.user_id)
+		var el = document.querySelectorAll("button.newbutton");
+		console.log(el, "button")
+
+		setInterval(async () => {
+			console.log(el, "button")
+
+			const messagesNumber = (await this.fetch_messages()).length
+			if (messagesNumber > this.messages_number) {
+				el[1].style.backgroundColor = "red"
+			}
+			const posts = await this.fetch_posts();
+			let postsNumber = posts.length;
+			while (postsNumber > this.posts_number) {
+				postsNumber--;
+				if (posts[postsNumber].author.id != this.user_id) {
+					el[0].style.backgroundColor = "red"
+				}
+			}
+		}, 30000)
+	}
+
 }
