@@ -1,41 +1,41 @@
 
 class Main extends React.Component {
-  constructor(props) {
-    super(props);
-    const accessToken = new URLSearchParams(window.location.search).get('accessToken');
-    this.state = {
-      accessToken: accessToken,
-      loggedUser: ""
-    };
-    if (sessionStorage.getItem("accessToken") === null) {
-      if (accessToken !== null) {
-        sessionStorage.setItem("accessToken", accessToken);
-      } else {
-        //handleError
-      }
-    }
-    // let data = sessionStorage.getItem('key');
-    // sessionStorage.removeItem('key');
-    // sessionStorage.clear();
-  }
-  render() {
-    return React.createElement(
-      "div",
-      { className: "main-block" },
-      React.createElement(ToolBar, { className: "ToolBar" }),
-      React.createElement(PostsListBox, null)
-    );
-  }
-  componentWillUnmount() {
-    //sessionStorage.clear();
-  }
+	constructor(props) {
+		super(props);
+		const accessToken = new URLSearchParams(window.location.search).get('accessToken');
+		this.state = {
+			accessToken: accessToken,
+			loggedUser: ""
+		};
+		if (sessionStorage.getItem("accessToken") === null) {
+			if (accessToken !== null) {
+				sessionStorage.setItem("accessToken", accessToken);
+			} else {
+				//handleError
+			}
+		}
+		// let data = sessionStorage.getItem('key');
+		// sessionStorage.removeItem('key');
+		// sessionStorage.clear();
+	}
+	render() {
+		return React.createElement(
+			"div",
+			{ className: "main-block" },
+			React.createElement(ToolBar, { className: "ToolBar" }),
+			React.createElement(PostsListBox, null)
+		);
+	}
+	componentWillUnmount() {
+		//sessionStorage.clear();
+	}
 
-  async componentDidMount() {
+	async componentDidMount() {
 
-    // console.log("2");
+		// console.log("2");
 
 
-  }
+	}
 };
 
 class ToolBar extends React.Component {
@@ -43,6 +43,9 @@ class ToolBar extends React.Component {
 	constructor(props) {
 		super(props);
 		this.handle_redirect_admin = this.handle_redirect_admin.bind(this);
+		this.listen_on_new_posts_or_messages = this.listen_on_new_posts_or_messages.bind(this);
+		this.listen_on_new_posts_or_messages();
+	}
 		this.state = { user_id: 0, user_name: '' };
 	}
 
@@ -61,6 +64,11 @@ class ToolBar extends React.Component {
 		return datetime;
 	}
 
+
+	//initial fetch
+	async componentDidMount() { }
+
+
 	async get_user_name() {
 		const response = await fetch('/api/users/getName', {
 			headers: { 'Authorization': 'BEARER ' + sessionStorage.getItem('accessToken') }
@@ -73,6 +81,7 @@ class ToolBar extends React.Component {
 			alert(err);
 		}
 	}
+
 	async get_user_id() {
 		const response = await fetch('/api/users/getId', {
 			headers: { 'Authorization': 'BEARER ' + sessionStorage.getItem('accessToken') }
@@ -134,12 +143,12 @@ class ToolBar extends React.Component {
 			),
 			React.createElement(
 				'button',
-				{ className: 'newbutton', onClick: this.handle_redirect_chat },
+				{ className: 'newbutton', onClick: this.handle_redirect_home },
 				'New Posts'
 			),
 			React.createElement(
 				'button',
-				{ className: 'newbutton', onClick: this.handle_redirect_about },
+				{ className: 'newbutton', onClick: this.handle_redirect_chat },
 				'New Message'
 			)
 		);
@@ -175,6 +184,9 @@ class ToolBar extends React.Component {
 		if (response.status == 200) {
 			const data = await response.json();
 			return data;
+		} else if (response.status == 403) {
+			sessionStorage.removeItem('accessToken');
+			window.location.href = '/login/login.html';
 		} else {
 			const err = await response.text();
 			alert(err);
@@ -188,6 +200,9 @@ class ToolBar extends React.Component {
 		if (response.status == 200) {
 			const data = await response.json();
 			return data;
+		} else if (response.status == 403) {
+			sessionStorage.removeItem('accessToken');
+			window.location.href = '/login/login.html';
 		} else {
 			const err = await response.text();
 			alert(err);
@@ -201,6 +216,9 @@ class ToolBar extends React.Component {
 		if (response.status == 200) {
 			const data = await response.json();
 			return data;
+		} else if (response.status == 403) {
+			sessionStorage.removeItem('accessToken');
+			window.location.href = '/login/login.html';
 		} else {
 			const err = await response.text();
 			alert(err);
@@ -325,7 +343,11 @@ class PostsListBox extends React.Component {
 		if (response.status == 200) {
 			const data = await response.json();
 			return data;
-		} else {
+		} else if (response.status == 403) {
+			sessionStorage.removeItem('accessToken');
+			window.location.href = '/login/login.html';
+		}
+		else {
 			const err = await response.text();
 			alert(err);
 		}
@@ -389,10 +411,12 @@ class PostsListBox extends React.Component {
 					}),
 					React.createElement(
 						'button',
-						{ className: 'button',
+						{
+							className: 'button',
 							type: 'submit',
 							name: 'Submit',
-							onClick: this.handle_post_submit },
+							onClick: this.handle_post_submit
+						},
 						'Post'
 					)
 				)
@@ -426,6 +450,9 @@ class PostsListBox extends React.Component {
 		if (response.status == 200) {
 			const data = await response.json();
 			return data;
+		} else if (response.status == 403) {
+			sessionStorage.removeItem('accessToken');
+			window.location.href = '/login/login.html';
 		} else {
 			const err = await response.text();
 			alert(err);
@@ -438,7 +465,8 @@ class PostsListBox extends React.Component {
 			body: JSON.stringify({ postText: this.state.postText }),
 			headers: {
 				'Authorization': 'BEARER ' + sessionStorage.getItem('accessToken'),
-				'Content-Type': 'application/json' }
+				'Content-Type': 'application/json'
+			}
 
 		});
 
@@ -447,6 +475,9 @@ class PostsListBox extends React.Component {
 			//const postItem = await response.json();
 			//const res =  this.update_post_list(postItem);	
 			//alert ("Success! Res: " + res)	  ;
+		} else if (response.status == 403) {
+			sessionStorage.removeItem('accessToken');
+			window.location.href = '/login/login.html';
 		} else {
 			const err = await response.text();
 			alert(err);

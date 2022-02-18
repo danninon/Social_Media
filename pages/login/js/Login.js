@@ -141,6 +141,9 @@ class Login extends React.Component {
           //works
           console.log("Signup successful, a request was sent to an admin!");
           window.alert("Signup successful, a request was sent to an admin!");
+        } else if (response.status == 403) {
+          sessionStorage.removeItem('accessToken');
+          window.location.href = '/login/login.html';
         }
       } else {
 
@@ -155,6 +158,9 @@ class Login extends React.Component {
           // window.alert("login successful, attempting to redirect to index.html");
           const data = await response.json();
           window.location.href = '/main/main.html?accessToken=' + data.accessToken;
+        } else if (response.status == 403) {
+          sessionStorage.removeItem('accessToken');
+          window.location.href = '/login/login.html';
         }
       };
     } catch (e) {

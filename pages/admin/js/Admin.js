@@ -4,156 +4,162 @@ const CREATED = 'created';
 const SUSPENDED = 'suspended';
 class Admin extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = { id: "", status: ACTIVE };
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-    }
+	constructor(props) {
+		super(props);
+		this.state = { id: "", status: ACTIVE };
+		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleChange = this.handleChange.bind(this);
+	}
 
-    //initial fetch
-    async componentDidMount() {}
+	//initial fetch
+	async componentDidMount() { }
 
-    //when fetch send authenticate!
-
-
-    //should filter by time
-    //adminOptions should be a different component
-    render() {
-        return React.createElement(
-            'div',
-            { className: 'main-block' },
-            React.createElement(ToolBar, { className: 'ToolBar' }),
-            React.createElement(
-                'h1',
-                null,
-                'Admin Options'
-            ),
-            React.createElement(
-                'form',
-                { className: 'container', onSubmit: this.handleSubmit },
-                React.createElement(
-                    'h2',
-                    null,
-                    'Send Global Message'
-                ),
-                React.createElement(
-                    'div',
-                    null,
-                    React.createElement(
-                        'label',
-                        { htmlFor: 'id' },
-                        React.createElement(
-                            'strong',
-                            null,
-                            'UserId:'
-                        )
-                    ),
-                    React.createElement('input', {
-                        type: 'id',
-                        name: 'id',
-                        placeholder: 'id',
-                        value: this.state.id,
-                        onChange: this.handleChange,
-                        required: true
-                    }),
-                    React.createElement(
-                        'button',
-                        { type: 'submit', className: 'button' },
-                        'Change Status'
-                    )
-                ),
-               
-                React.createElement(
-                    'h2',
-                    null,
-                    'Change User Status'
-                ),
-                React.createElement(
-                    'div',
-                    null,
-                    React.createElement(
-                        'h3',
-                        null,
-                        'New status:'
-                    ),
-                    React.createElement(
-                        'select',
-                        { name: 'status', id: 'statusSelect', required: true, value: this.state.status, onChange: this.handleChange },
-                        React.createElement(
-                            'option',
-                            { value: 'active' },
-                            'Active'
-                        ),
-                        React.createElement(
-                            'option',
-                            { value: 'suspended' },
-                            'Suspended'
-                        ),
-                        React.createElement(
-                            'option',
-                            { value: 'deleted' },
-                            'Deleted'
-                        )
-                    )
-                )
-            ),
-            React.createElement(MessageListBox, { className: 'container' })
-        );
-    }
-
-    // /approveUser
-    // /suspend/:id
-    // /unsuspend/:id
-    // /deleteUser/:id
+	//when fetch send authenticate!
 
 
-    async handleSubmit(event) {
+	//should filter by time
+	//adminOptions should be a different component
+	render() {
+		return React.createElement(
+			'div',
+			{ className: 'main-block' },
+			React.createElement(ToolBar, { className: 'ToolBar' }),
+			React.createElement(
+				'h1',
+				null,
+				'Admin Options'
+			),
+			React.createElement(
+				'form',
+				{ className: 'container', onSubmit: this.handleSubmit },
+				React.createElement(
+					'h2',
+					null,
+					'Send Global Message'
+				),
+				React.createElement(
+					'div',
+					null,
+					React.createElement(
+						'label',
+						{ htmlFor: 'id' },
+						React.createElement(
+							'strong',
+							null,
+							'UserId:'
+						)
+					),
+					React.createElement('input', {
+						type: 'id',
+						name: 'id',
+						placeholder: 'id',
+						value: this.state.id,
+						onChange: this.handleChange,
+						required: true
+					}),
+					React.createElement(
+						'button',
+						{ type: 'submit', className: 'button' },
+						'Change Status'
+					)
+				),
 
-        try {
-            let err;
-            let fetch_url = '/api/admin';
-            let body = { id: this.state.id, status: this.state.status };
-            let method;
-            let headers = {
-                'Authorization': 'BEARER ' + sessionStorage.getItem('accessToken'),
-                'Content-Type': 'application/json' };
+				React.createElement(
+					'h2',
+					null,
+					'Change User Status'
+				),
+				React.createElement(
+					'div',
+					null,
+					React.createElement(
+						'h3',
+						null,
+						'New status:'
+					),
+					React.createElement(
+						'select',
+						{ name: 'status', id: 'statusSelect', required: true, value: this.state.status, onChange: this.handleChange },
+						React.createElement(
+							'option',
+							{ value: 'active' },
+							'Active'
+						),
+						React.createElement(
+							'option',
+							{ value: 'suspended' },
+							'Suspended'
+						),
+						React.createElement(
+							'option',
+							{ value: 'deleted' },
+							'Deleted'
+						)
+					)
+				)
+			),
+			React.createElement(MessageListBox, { className: 'container' })
+		);
+	}
 
-            switch (this.state.status) {
-                case ACTIVE:
-                    fetch_url += '/approveUser';
-                    method = 'POST';
-                    break;
-                case SUSPENDED:
-                    fetch_url = fetch_url + '/suspend/' + this.state.id;
-                    method = 'PUT';
+	// /approveUser
+	// /suspend/:id
+	// /unsuspend/:id
+	// /deleteUser/:id
 
-                    break;
-                case DELETED:
-                    fetch_url = fetch_url + '/deleteUser/' + this.state.id;
-                    method = 'DELETE';
-                    break;
-                default:
-                    throw new error(this.state.status + " is not an option");
-                    break;
-            }
-            const response = await fetch(fetch_url, { method: method,
-                body: JSON.stringify(body),
-                headers: headers });
 
-            if (response.status == 200) {
-                window.alert("action successful\nUser status: " + (await response));
-            } else {
-                throw new error(response.text());
-            }
-        } catch (e) {
-            window.alert(e.text);
-        }
-    }
+	async handleSubmit(event) {
 
-    async handleChange(event) {
-        this.setState({ [event.target.name]: event.target.value });
-    }
+		try {
+			let err;
+			let fetch_url = '/api/admin';
+			let body = { id: this.state.id, status: this.state.status };
+			let method;
+			let headers = {
+				'Authorization': 'BEARER ' + sessionStorage.getItem('accessToken'),
+				'Content-Type': 'application/json'
+			};
+
+			switch (this.state.status) {
+				case ACTIVE:
+					fetch_url += '/approveUser';
+					method = 'POST';
+					break;
+				case SUSPENDED:
+					fetch_url = fetch_url + '/suspend/' + this.state.id;
+					method = 'PUT';
+
+					break;
+				case DELETED:
+					fetch_url = fetch_url + '/deleteUser/' + this.state.id;
+					method = 'DELETE';
+					break;
+				default:
+					throw new error(this.state.status + " is not an option");
+					break;
+			}
+			const response = await fetch(fetch_url, {
+				method: method,
+				body: JSON.stringify(body),
+				headers: headers
+			});
+
+			if (response.status == 200) {
+				window.alert("action successful\nUser status: " + (await response));
+			} else if (response.status == 403) {
+				sessionStorage.removeItem('accessToken');
+				window.location.href = '/login/login.html';
+			} else {
+				throw new error(response.text());
+			}
+		} catch (e) {
+			window.alert(e.text);
+		}
+	}
+
+	async handleChange(event) {
+		this.setState({ [event.target.name]: event.target.value });
+	}
 }
 
 class ToolBar extends React.Component {
@@ -162,10 +168,12 @@ class ToolBar extends React.Component {
 		super(props);
 		this.handle_redirect_admin = this.handle_redirect_admin.bind(this);
 		this.state = {};
+		this.listen_on_new_posts_or_messages = this.listen_on_new_posts_or_messages.bind(this);
+		this.listen_on_new_posts_or_messages();
 	}
 
 	//initial fetch
-	async componentDidMount() {}
+	async componentDidMount() { }
 
 	//when fetch send authenticate!
 
@@ -204,12 +212,12 @@ class ToolBar extends React.Component {
 			),
 			React.createElement(
 				'button',
-				{ className: 'newbutton', onClick: this.handle_redirect_chat },
+				{ className: 'newbutton', onClick: this.handle_redirect_home },
 				'New Posts'
 			),
 			React.createElement(
 				'button',
-				{ className: 'newbutton', onClick: this.handle_redirect_about },
+				{ className: 'newbutton', onClick: this.handle_redirect_chat },
 				'New Message'
 			)
 		);
@@ -245,6 +253,9 @@ class ToolBar extends React.Component {
 		if (response.status == 200) {
 			const data = await response.json();
 			return data;
+		} else if (response.status == 403) {
+			sessionStorage.removeItem('accessToken');
+			window.location.href = '/login/login.html';
 		} else {
 			const err = await response.text();
 			alert(err);
@@ -258,6 +269,9 @@ class ToolBar extends React.Component {
 		if (response.status == 200) {
 			const data = await response.json();
 			return data;
+		} else if (response.status == 403) {
+			sessionStorage.removeItem('accessToken');
+			window.location.href = '/login/login.html';
 		} else {
 			const err = await response.text();
 			alert(err);
@@ -271,6 +285,9 @@ class ToolBar extends React.Component {
 		if (response.status == 200) {
 			const data = await response.json();
 			return data;
+		} else if (response.status == 403) {
+			sessionStorage.removeItem('accessToken');
+			window.location.href = '/login/login.html';
 		} else {
 			const err = await response.text();
 			alert(err);
@@ -412,10 +429,12 @@ class MessageListBox extends React.Component {
 				null,
 				React.createElement(
 					'button',
-					{ className: 'button',
+					{
+						className: 'button',
 						type: 'submit',
 						name: 'Submit',
-						onClick: this.handle_message_submit },
+						onClick: this.handle_message_submit
+					},
 					'Send Global Message'
 				)
 			)
@@ -436,6 +455,9 @@ class MessageListBox extends React.Component {
 		if (response.status == 200) {
 			const data = await response.json();
 			return data;
+		} else if (response.status == 403) {
+			sessionStorage.removeItem('accessToken');
+			window.location.href = '/login/login.html';
 		} else {
 			const err = await response.text();
 			alert(err);
@@ -448,7 +470,8 @@ class MessageListBox extends React.Component {
 			body: JSON.stringify({ messageText: this.state.messageText }),
 			headers: {
 				'Authorization': 'BEARER ' + sessionStorage.getItem('accessToken'),
-				'Content-Type': 'application/json' }
+				'Content-Type': 'application/json'
+			}
 
 		});
 
@@ -457,6 +480,9 @@ class MessageListBox extends React.Component {
 			//const postItem = await response.json();
 			//const res =  this.update_message_list(postItem);	
 			//alert ("Success! Res: " + res)	  ;
+		} else if (response.status == 403) {
+			sessionStorage.removeItem('accessToken');
+			window.location.href = '/login/login.html';
 		} else {
 			const err = await response.text();
 			alert(err);

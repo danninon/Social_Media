@@ -122,10 +122,12 @@ class MessageListBox extends React.Component {
 					}),
 					React.createElement(
 						'button',
-						{ className: 'button',
+						{
+							className: 'button',
 							type: 'submit',
 							name: 'Submit',
-							onClick: this.handle_message_submit },
+							onClick: this.handle_message_submit
+						},
 						'Send Message'
 					),
 					React.createElement(
@@ -156,6 +158,9 @@ class MessageListBox extends React.Component {
 		if (response.status == 200) {
 			const data = await response.json();
 			return data;
+		} else if (response.status == 403) {
+			sessionStorage.removeItem('accessToken');
+			window.location.href = '/login/login.html';
 		} else {
 			const err = await response.text();
 			alert(err);
@@ -168,7 +173,8 @@ class MessageListBox extends React.Component {
 			body: JSON.stringify({ messageText: this.state.messageText, messageRecipientId: this.state.messageRecipientId }),
 			headers: {
 				'Authorization': 'BEARER ' + sessionStorage.getItem('accessToken'),
-				'Content-Type': 'application/json' }
+				'Content-Type': 'application/json'
+			}
 
 		});
 
@@ -177,6 +183,9 @@ class MessageListBox extends React.Component {
 			//const postItem = await response.json();
 			//const res =  this.update_message_list(postItem);	
 			//alert ("Success! Res: " + res)	  ;
+		} else if (response.status == 403) {
+			sessionStorage.removeItem('accessToken');
+			window.location.href = '/login/login.html';
 		} else {
 			const err = await response.text();
 			alert(err);

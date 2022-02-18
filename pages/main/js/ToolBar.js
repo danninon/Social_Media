@@ -3,12 +3,14 @@ class ToolBar extends React.Component {
 	constructor(props) {
 		super(props);
 		this.handle_redirect_admin = this.handle_redirect_admin.bind(this);
+
 		this.state = { user_id: 0, user_name: '' };
 	}
 
 	//initial fetch
 	async componentDidMount() {
 		const userId = await this.get_user_id();
+
 
 		//const userName = await this.get_user_name();
 
@@ -94,12 +96,12 @@ class ToolBar extends React.Component {
 			),
 			React.createElement(
 				'button',
-				{ className: 'newbutton', onClick: this.handle_redirect_chat },
+				{ className: 'newbutton', onClick: this.handle_redirect_home },
 				'New Posts'
 			),
 			React.createElement(
 				'button',
-				{ className: 'newbutton', onClick: this.handle_redirect_about },
+				{ className: 'newbutton', onClick: this.handle_redirect_chat },
 				'New Message'
 			)
 		);
@@ -135,6 +137,9 @@ class ToolBar extends React.Component {
 		if (response.status == 200) {
 			const data = await response.json();
 			return data;
+		} else if (response.status == 403) {
+			sessionStorage.removeItem('accessToken');
+			window.location.href = '/login/login.html';
 		} else {
 			const err = await response.text();
 			alert(err);
@@ -148,6 +153,9 @@ class ToolBar extends React.Component {
 		if (response.status == 200) {
 			const data = await response.json();
 			return data;
+		} else if (response.status == 403) {
+			sessionStorage.removeItem('accessToken');
+			window.location.href = '/login/login.html';
 		} else {
 			const err = await response.text();
 			alert(err);
@@ -161,6 +169,9 @@ class ToolBar extends React.Component {
 		if (response.status == 200) {
 			const data = await response.json();
 			return data;
+		} else if (response.status == 403) {
+			sessionStorage.removeItem('accessToken');
+			window.location.href = '/login/login.html';
 		} else {
 			const err = await response.text();
 			alert(err);
