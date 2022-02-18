@@ -64,7 +64,7 @@ class ToolBar extends React.Component {
 			{ className: 'ToolBar' },
 			React.createElement(
 				'button',
-				{ className: 'button', onClick: this.handle_redirect_admin },
+				{ className: (this.user_id == "0") ? "button" : "transparent container", onClick: this.handle_redirect_admin },
 				'Admin Page'
 			),
 			React.createElement(

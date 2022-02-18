@@ -110,9 +110,6 @@ class Login extends React.Component {
         if (response.status == 200) { //works
           console.log("Signup successful, a request was sent to an admin!");
           window.alert("Signup successful, a request was sent to an admin!");
-        } else if (response.status == 403) {
-          sessionStorage.removeItem('accessToken');
-          window.location.href = '/login/login.html';
         }
       } else {
 
@@ -129,9 +126,6 @@ class Login extends React.Component {
           const data = await response.json();
           window.location.href = '/main/main.html?accessToken=' + data.accessToken;
 
-        } else if (response.status == 403) {
-          sessionStorage.removeItem('accessToken');
-          window.location.href = '/login/login.html';
         }
 
       };

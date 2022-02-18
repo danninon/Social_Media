@@ -11,19 +11,19 @@ import dnv from 'dotenv'
 
 
 try {
-	
+
 	dnv.config(); //for access tokens
 	const reExt = /\.([a-z]+)/i;
 
 	const app = express()
 	let port = 2718;
 
-	function content_type_from_extension(url){
+	function content_type_from_extension(url) {
 		const m = url.match(reExt);
 		if (!m) return 'application/json'
 		const ext = m[1].toLowerCase();
 
-		switch (ext){
+		switch (ext) {
 			case 'js': return 'text/javascript';
 			case 'css': return 'text/css';
 			case 'html': return 'text/html'
@@ -50,16 +50,16 @@ try {
 	app.use("/api/admin", adminRouter);
 
 	const __dirname = path.resolve();
-	app.use(express.static(path.join(__dirname,'pages')));
+	app.use(express.static(path.join(__dirname, 'pages')));
 	await db.readData();
-	await db.MakeAdmin(); 
+	await db.MakeAdmin();
 
 	// Init 
 	let msg = `server is listening at port ${port}`
-	app.listen(port, () => {  })
+	app.listen(port, () => { })
 	console.log(msg);
 }
-catch (e) { 
+catch (e) {
 	console.log(e);
 }
 finally {

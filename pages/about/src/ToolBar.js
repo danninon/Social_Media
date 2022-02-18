@@ -3,9 +3,10 @@ class ToolBar extends React.Component {
 	constructor(props) {
 		super(props);
 		this.handle_redirect_admin = this.handle_redirect_admin.bind(this);
-		this.state = {};
+		
 		this.listen_on_new_posts_or_messages = this.listen_on_new_posts_or_messages.bind(this);
 		this.listen_on_new_posts_or_messages();
+		 
 	}
 
 	//initial fetch
@@ -21,7 +22,7 @@ class ToolBar extends React.Component {
 
 	render() {
 		return <div className='ToolBar'>
-			<button className='button' onClick={this.handle_redirect_admin}>Admin Page</button>
+			<button className={(this.user_id == "0") ? "button" : "transparent container"} onClick={this.handle_redirect_admin}>Admin Page</button>
 			<button className='button' onClick={this.handle_redirect_home}>Home Page</button>
 			<button className='button' onClick={this.handle_redirect_chat}>Message Page</button>
 			<button className='button' onClick={this.handle_redirect_about}>About Page</button>
@@ -109,7 +110,6 @@ class ToolBar extends React.Component {
 	}
 
 	async listen_on_new_posts_or_messages() {
-		console.log(this)
 		this.posts_number = (await this.fetch_posts()).length
 		this.messages_number = (await this.fetch_messages()).length
 		this.user_id = await this.get_user_id();
