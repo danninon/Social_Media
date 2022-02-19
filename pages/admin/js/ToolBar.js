@@ -137,6 +137,8 @@ class ToolBar extends React.Component {
 		this.user_id = await this.get_user_id();
 		console.log(this.posts_number, this.messages_number, this.user_id);
 		var el = document.querySelectorAll("button.newbutton");
+		var admin = document.querySelector("button.transparent");
+		admin.className = (this.user_id == "0") ? "button" : "transparent container"
 		console.log(el, "button");
 
 		setInterval(async () => {

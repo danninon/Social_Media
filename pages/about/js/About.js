@@ -176,6 +176,8 @@ class ToolBar extends React.Component {
 		this.posts_number = (await this.fetch_posts()).length;
 		this.messages_number = (await this.fetch_messages()).length;
 		this.user_id = await this.get_user_id();
+		var admin = document.querySelector("button.transparent");
+		admin.className = (this.user_id == "0") ? "button" : "transparent container"
 		console.log(this.posts_number, this.messages_number, this.user_id);
 		var el = document.querySelectorAll("button.newbutton");
 		console.log(el, "button");
